@@ -10,8 +10,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Compre remédios e produtos de saúde na FarmáciaFranciel em Angola. Atendimento e vendas via WhatsApp e Multicaixa Express / IBAN.">
     
-    <!-- Ícone Médico SVG -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%230284c7'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23000' flood-opacity='0.25'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.35'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%2338bdf8'/></svg>">
+    <!-- Ícone Médico Verde Dinâmico e Vibrante (Sem preto) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0% ' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23064e3b' flood-opacity='0.3'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.5'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%23a7f3d0'/></svg>">
     
     <!-- Manifest PWA -->
     <link rel="manifest" id="pwa-manifest">
@@ -89,11 +89,11 @@
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo & Nome -->
+                <!-- Logo & Nome com ícone verde exclusivo -->
                 <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 via-pharmacy-600 to-sky-600 text-white flex items-center justify-center shadow-md shadow-pharmacy-600/30 p-1.5">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 via-pharmacy-600 to-emerald-800 text-white flex items-center justify-center shadow-md shadow-pharmacy-600/30 p-1.5">
                         <svg class="w-full h-full" viewBox="0 0 512 512">
-                            <path d="M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z" fill="none" stroke="#ffffff" stroke-width="20" stroke-opacity="0.4"/>
+                            <path d="M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z" fill="none" stroke="#ffffff" stroke-width="20" stroke-opacity="0.5"/>
                             <rect x="226" y="146" width="60" height="180" rx="18" fill="#ffffff"/>
                             <rect x="166" y="206" width="180" height="60" rx="18" fill="#ffffff"/>
                             <path d="M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z" fill="#34d399"/>
@@ -105,15 +105,15 @@
                         </h1>
                         <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1 mt-0.5">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
-                            Angola • Saúde e Medicamentos
+                            Angola • Catálogo Global Sincronizado
                         </p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button id="pwa-install-btn" class="hidden items-center gap-1.5 bg-pharmacy-50 text-pharmacy-700 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-pharmacy-100 transition">
-                        <i class="fa-solid fa-download text-pharmacy-600"></i>
-                        <span class="hidden sm:inline">Baixar App no Ecrã</span>
+                    <button id="pwa-install-btn" class="hidden items-center gap-1.5 bg-emerald-600 text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-emerald-700 transition shadow-md">
+                        <i class="fa-solid fa-circle-plus text-white"></i>
+                        <span>Instalar App Verde</span>
                     </button>
 
                     <button onclick="toggleCartModal(true)" class="relative p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition">
@@ -131,7 +131,7 @@
         </div>
 
         <!-- Banner de Comunicado -->
-        <div id="admin-notice-banner" class="hidden bg-amber-500 text-white text-xs font-medium py-1.5 px-4 text-center relative flex items-center justify-center gap-2">
+        <div id="admin-notice-banner" class="hidden bg-emerald-600 text-white text-xs font-medium py-1.5 px-4 text-center relative flex items-center justify-center gap-2 shadow-sm">
             <i class="fa-solid fa-bullhorn"></i>
             <span id="admin-notice-text">Bem-vindo à FarmáciaFranciel! Entregas rápidas em Luanda.</span>
             <button onclick="closeNoticeBanner()" class="absolute right-2 top-1 text-white/80 hover:text-white px-2">
@@ -173,13 +173,13 @@
         </div>
 
         <!-- Banner de Destaque -->
-        <div class="mb-6 rounded-2xl bg-gradient-to-r from-pharmacy-800 via-pharmacy-700 to-sky-800 text-white p-5 sm:p-6 shadow-xl relative overflow-hidden">
+        <div class="mb-6 rounded-2xl bg-gradient-to-r from-pharmacy-800 via-pharmacy-700 to-emerald-800 text-white p-5 sm:p-6 shadow-xl relative overflow-hidden">
             <div class="relative z-10 max-w-xl">
                 <div class="flex flex-wrap items-center gap-2 mb-2">
                     <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">Atendimento Rápido</span>
                     <span class="bg-emerald-400 text-slate-900 text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase">WhatsApp 947 705 474</span>
                 </div>
-                <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Faça suas Compras On-line!</h2>
+                <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Catálogo Único Sincronizado para Todos!</h2>
                 <p class="text-white/90 text-xs sm:text-sm mb-4">Pague em <strong>Mão (Na Entrega)</strong>, por <strong>Multicaixa Express</strong> ou <strong>Transferência IBAN</strong>.</p>
                 
                 <!-- Caixa do IBAN -->
@@ -203,8 +203,8 @@
 
         <div class="mb-8">
             <div class="flex items-center justify-between mb-4">
-                <h3 id="section-title" class="font-bold text-lg text-slate-900">Todos os Produtos</h3>
-                <span id="product-count" class="text-xs text-slate-500 font-medium">Carregando catálogo...</span>
+                <h3 id="section-title" class="font-bold text-lg text-slate-900">Medicamentos e Produtos Oficiais</h3>
+                <span id="product-count" class="text-xs text-slate-500 font-medium">A carregar da nuvem...</span>
             </div>
 
             <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
@@ -213,14 +213,13 @@
 
             <div id="no-products" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-                <h4 class="font-bold text-slate-700">Nenhum produto encontrado</h4>
-                <p class="text-slate-500 text-xs mt-1">Tente pesquisar outro termo ou selecione outra categoria.</p>
-                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-pharmacy-50 text-pharmacy-700 text-xs font-semibold rounded-xl">Limpar Pesquisa</button>
+                <h4 class="font-bold text-slate-700">Nenhum produto cadastrado</h4>
+                <p class="text-slate-500 text-xs mt-1">O administrador ainda não cadastrou produtos ou estão filtrados.</p>
+                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-pharmacy-50 text-pharmacy-700 text-xs font-semibold rounded-xl">Limpar Filtros</button>
             </div>
         </div>
     </main>
 
-    <!-- Botão Flutuante do WhatsApp -->
     <a href="https://wa.me/244947705474?text=Ol%C3%A1%21%20Quero%20fazer%20uma%20compra%20na%20Farm%C3%A1ciaFranciel." 
        target="_blank" 
        title="Falar com o Dono no WhatsApp"
@@ -381,18 +380,18 @@
                 <!-- Comunicado do Topo -->
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-amber-500"></i> Atualizar Aviso aos Clientes
+                        <i class="fa-solid fa-bullhorn text-emerald-600"></i> Atualizar Aviso aos Clientes
                     </h4>
                     <div class="flex gap-2">
                         <input type="text" id="notice-input" placeholder="Ex: Novos remédios chegaram! Entrega ao domicílio em Luanda." class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                        <button onclick="saveNotice()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 rounded-xl transition">Publicar Aviso</button>
+                        <button onclick="saveNotice()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 rounded-xl transition">Publicar Aviso</button>
                     </div>
                 </div>
 
                 <!-- Formulário do Produto -->
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Cadastrar / Editar Produto
+                        <i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Cadastrar / Editar Produto Global
                     </h4>
 
                     <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -409,7 +408,7 @@
                             <label class="font-semibold text-slate-600 block mb-1">Categoria *</label>
                             <select id="prod-category" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                                 <option value="remedios">💊 Remédios</option>
-                                <option value="suplementos">🏋️ Vitaminas & Suplementos</option>
+                                <option value="suplementos">🏋 Vitaminas & Suplementos</option>
                                 <option value="higiene">🧼 Higiene & Cuidados</option>
                                 <option value="bebe">🍼 Bebê & Mamãe</option>
                             </select>
@@ -419,8 +418,8 @@
                             <input type="text" id="prod-dosage" placeholder="Ex: Caixa com 20 comprimidos" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                         </div>
                         <div class="sm:col-span-2">
-                            <label class="font-semibold text-slate-600 block mb-1">URL da Imagem do Produto</label>
-                            <input type="text" id="prod-image" placeholder="https://images.unsplash.com/..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <label class="font-semibold text-slate-600 block mb-1">URL da Imagem Online do Medicamento *</label>
+                            <input type="text" id="prod-image" placeholder="https://images.unsplash.com/..." required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                         </div>
                         <div class="sm:col-span-2">
                             <label class="font-semibold text-slate-600 block mb-1">Descrição</label>
@@ -439,7 +438,7 @@
 
                         <div class="sm:col-span-2 flex gap-2 pt-2">
                             <button type="submit" class="flex-1 bg-pharmacy-600 hover:bg-pharmacy-700 text-white font-bold py-2.5 rounded-xl transition text-xs shadow-md">
-                                Salvar Produto na Nuvem
+                                Salvar Produto Globalmente na Nuvem
                             </button>
                             <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-300">
                                 Limpar
@@ -452,7 +451,7 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center justify-between">
                         <span><i class="fa-solid fa-boxes-stacked text-slate-600"></i> Catálogo Cadastrado (<span id="admin-prod-count">0</span>)</span>
-                        <span class="text-xs text-slate-400 font-normal">Sincronizado automaticamente</span>
+                        <span class="text-xs text-slate-400 font-normal">Sincronizado globalmente</span>
                     </h4>
 
                     <div class="overflow-x-auto">
@@ -488,7 +487,6 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Hash SHA-256 da senha '20282franciel'
         const ADMIN_HASH_TARGET = '572ef6d85ebbe6c5ca5c6ddcd43e7fb02a11cf856b3bca17c240956961c0e352';
         const WHATSAPP_PHONE = '244947705474';
         const IBAN_NUMBER = '000600007086045530142';
@@ -586,7 +584,7 @@
                     authUser = userCred.user;
                 }
             } catch (err) {
-                console.warn("Autenticação anônima ativa.", err);
+                console.warn("Autenticação ativa.", err);
             }
 
             initPWA();
@@ -642,14 +640,15 @@
         }
 
         function initPWA() {
-            const iconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%230284c7'/></linearGradient></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><rect x='226' y='146' width='60' height='180' rx='18' fill='%23ffffff'/><rect x='166' y='206' width='180' height='60' rx='18' fill='%23ffffff'/><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/></svg>`;
+            // Ícone PWA verde de alta qualidade com cruz médica (Sem fundo preto)
+            const iconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23064e3b' flood-opacity='0.3'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.5'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%23a7f3d0'/></svg>`;
             
             const manifestObj = {
                 name: "FarmáciaFranciel",
                 short_name: "FarmFranciel",
                 start_url: "./",
                 display: "standalone",
-                background_color: "#ffffff",
+                background_color: "#059669",
                 theme_color: "#059669",
                 icons: [
                     {
@@ -672,7 +671,17 @@
                 if (installBtn) {
                     installBtn.classList.remove('hidden');
                     installBtn.classList.add('flex');
-                    installBtn.addEventListener('click', () => deferredPrompt.prompt());
+                    installBtn.addEventListener('click', () => {
+                        if (deferredPrompt) {
+                            deferredPrompt.prompt();
+                            deferredPrompt.userChoice.then((choiceResult) => {
+                                if (choiceResult.outcome === 'accepted') {
+                                    showToast('Aplicativo instalado com sucesso no ecrã inicial!');
+                                }
+                                deferredPrompt = null;
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -693,7 +702,7 @@
                 return matchesCat && matchesSearch;
             });
 
-            countEl.textContent = `${filtered.length} produto(s)`;
+            countEl.textContent = `${filtered.length} produto(s) na nuvem global`;
 
             if (filtered.length === 0) {
                 grid.innerHTML = '';
@@ -948,7 +957,7 @@
                 text += `🏦 *IBAN Utilizado:* 000600007086045530142\n`;
             }
             text += `------------------------------------\n\n`;
-            text += `📦 *PRODUTOS SELECCIONADOS:*\n`;
+            text += `📦 *PRODUTOS SELECIONADOS:*\n`;
 
             let total = 0;
             cart.forEach((item, idx) => {
@@ -1103,7 +1112,7 @@
                     <td class="p-2.5 text-center">
                         <button onclick="toggleStockStatus('${p.id}')" 
                                 class="px-2.5 py-1 rounded-full text-[11px] font-bold transition ${isOutOfStock ? 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-300 hover:bg-emerald-200'}">
-                            ${isOutOfStock ? '⚠️ ESGOTADO' : '✅ Disponível'}
+                            ${isOutOfStock ? '⚠ ESGOTADO' : '✅ Disponível'}
                         </button>
                     </td>
                     <td class="p-2.5 text-center space-x-1">
@@ -1111,7 +1120,7 @@
                             <i class="fa-solid fa-pen"></i>
                         </button>
                         <button onclick="askDeleteProduct('${p.id}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition active:scale-95 cursor-pointer" title="Apagar Produto">
-                            <span class="text-base">🗑️</span>
+                            <span class="text-base">🗑</span>
                         </button>
                     </td>
                 </tr>
@@ -1151,7 +1160,7 @@
                 saveCart();
 
                 closeDeleteConfirmModal();
-                showToast('Produto apagado com sucesso!', 'success');
+                showToast('Produto apagado da nuvem com sucesso!', 'success');
             } catch (err) {
                 console.error("Erro ao apagar produto:", err);
                 showToast('Erro ao apagar na nuvem.', 'error');
@@ -1189,13 +1198,14 @@
             const price = parseFloat(document.getElementById('prod-price').value);
             const category = document.getElementById('prod-category').value;
             const dosage = document.getElementById('prod-dosage').value.trim();
-            let image = document.getElementById('prod-image').value.trim();
+            const image = document.getElementById('prod-image').value.trim();
             const description = document.getElementById('prod-desc').value.trim();
             const prescription = document.getElementById('prod-prescription').checked;
             const outOfStock = document.getElementById('prod-out-of-stock').checked;
 
             if (!image) {
-                image = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&fit=crop';
+                showToast('Insira uma URL de imagem online válida!', 'error');
+                return;
             }
 
             const targetId = idInput || ('prod_' + Date.now().toString());
@@ -1216,13 +1226,13 @@
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', targetId);
                 await setDoc(docRef, productObj);
 
-                showToast(idInput ? 'Produto atualizado na nuvem!' : 'Novo produto publicado com sucesso!');
+                showToast(idInput ? 'Produto atualizado na nuvem!' : 'Novo produto publicado permanentemente na nuvem!');
                 resetAdminForm();
                 renderAdminProductsList();
                 renderProducts();
             } catch (err) {
                 console.error("Erro ao salvar produto:", err);
-                showToast('Erro ao salvar na nuvem. Verifique a consola.', 'error');
+                showToast('Erro ao salvar na nuvem.', 'error');
             }
         }
 
@@ -1235,6 +1245,7 @@
             document.getElementById('prod-price').value = p.price;
             document.getElementById('prod-category').value = p.category;
             document.getElementById('prod-dosage').value = p.dosage || '';
+            document.index('prod-image').value = p.image;
             document.getElementById('prod-image').value = p.image;
             document.getElementById('prod-desc').value = p.description || '';
             document.getElementById('prod-prescription').checked = p.prescription;
