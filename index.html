@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Compre remédios e produtos de saúde na FarmáciaFranciel em Angola. Atendimento e vendas via WhatsApp e Multicaixa Express / IBAN.">
     
-    <!-- Ícone Médico Verde Dinâmico e Vibrante (Sem preto) -->
+    <!-- Ícone Médico Verde Dinâmico e Vibrante -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0% ' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23064e3b' flood-opacity='0.3'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.5'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%23a7f3d0'/></svg>">
     
     <!-- Manifest PWA -->
@@ -105,7 +105,7 @@
                         </h1>
                         <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1 mt-0.5">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
-                            Angola • Catálogo Global Sincronizado
+                            Angola • Catálogo Cloud Sincronizado
                         </p>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                     <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">Atendimento Rápido</span>
                     <span class="bg-emerald-400 text-slate-900 text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase">WhatsApp 947 705 474</span>
                 </div>
-                <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Catálogo Único Sincronizado para Todos!</h2>
+                <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Medicamentos Oficiais Sincronizados!</h2>
                 <p class="text-white/90 text-xs sm:text-sm mb-4">Pague em <strong>Mão (Na Entrega)</strong>, por <strong>Multicaixa Express</strong> ou <strong>Transferência IBAN</strong>.</p>
                 
                 <!-- Caixa do IBAN -->
@@ -203,7 +203,7 @@
 
         <div class="mb-8">
             <div class="flex items-center justify-between mb-4">
-                <h3 id="section-title" class="font-bold text-lg text-slate-900">Medicamentos e Produtos Oficiais</h3>
+                <h3 id="section-title" class="font-bold text-lg text-slate-900">Catálogo Oficial de Medicamentos</h3>
                 <span id="product-count" class="text-xs text-slate-500 font-medium">A carregar da nuvem...</span>
             </div>
 
@@ -213,9 +213,9 @@
 
             <div id="no-products" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-                <h4 class="font-bold text-slate-700">Nenhum produto cadastrado</h4>
-                <p class="text-slate-500 text-xs mt-1">O administrador ainda não cadastrou produtos ou estão filtrados.</p>
-                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-pharmacy-50 text-pharmacy-700 text-xs font-semibold rounded-xl">Limpar Filtros</button>
+                <h4 class="font-bold text-slate-700">Nenhum medicamento cadastrado ainda</h4>
+                <p class="text-slate-500 text-xs mt-1">Apenas o administrador (clicando no escudo acima) pode cadastrar os produtos oficiais.</p>
+                <button onclick="openAdminAuth()" class="mt-4 px-4 py-2 bg-pharmacy-600 text-white text-xs font-semibold rounded-xl shadow">Aceder como Administrador</button>
             </div>
         </div>
     </main>
@@ -319,7 +319,7 @@
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <h3 class="font-bold text-lg text-slate-900">Painel do Administrador</h3>
-                <p class="text-xs text-slate-500 mt-1">Acesso protegido com autenticação criptografada por hash.</p>
+                <p class="text-xs text-slate-500 mt-1">Acesso exclusivo para gerenciar medicamentos na nuvem.</p>
             </div>
 
             <form onsubmit="handleAdminLogin(event)" class="space-y-4">
@@ -346,7 +346,7 @@
                 🗑️
             </div>
             <div>
-                <h3 class="font-bold text-lg text-slate-900">Apagar Produto da Nuvem?</h3>
+                <h3 class="font-bold text-lg text-slate-900">Apagar Medicamento da Nuvem?</h3>
                 <p class="text-xs text-slate-500 mt-1" id="delete-confirm-text">Esta ação removerá o produto permanentemente para todos os clientes.</p>
             </div>
             <div class="flex gap-2 pt-2">
@@ -360,14 +360,15 @@
         </div>
     </div>
 
+    <!-- Painel Administrador -->
     <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6">
         <div class="bg-white rounded-2xl max-w-4xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <span class="bg-pharmacy-500 text-white p-2 rounded-lg"><i class="fa-solid fa-sliders"></i></span>
                     <div>
-                        <h3 class="font-bold text-base">FarmáciaFranciel - Gestão Sincronizada</h3>
-                        <p class="text-xs text-slate-400">Adicione, edite preços, estoque e apague produtos em tempo real</p>
+                        <h3 class="font-bold text-base">FarmáciaFranciel - Gestão Exclusiva do Administrador</h3>
+                        <p class="text-xs text-slate-400">Adicione, edite ou remova medicamentos da nuvem global</p>
                     </div>
                 </div>
                 <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white p-2">
@@ -391,13 +392,13 @@
                 <!-- Formulário do Produto -->
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Cadastrar / Editar Produto Global
+                        <i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Cadastrar / Editar Medicamento Oficial
                     </h4>
 
                     <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                         <input type="hidden" id="prod-id">
                         <div>
-                            <label class="font-semibold text-slate-600 block mb-1">Nome do Produto *</label>
+                            <label class="font-semibold text-slate-600 block mb-1">Nome do Medicamento *</label>
                             <input type="text" id="prod-name" placeholder="Ex: Paracetamol 500mg" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                         </div>
                         <div>
@@ -418,8 +419,9 @@
                             <input type="text" id="prod-dosage" placeholder="Ex: Caixa com 20 comprimidos" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
                         </div>
                         <div class="sm:col-span-2">
-                            <label class="font-semibold text-slate-600 block mb-1">URL da Imagem Online do Medicamento *</label>
-                            <input type="text" id="prod-image" placeholder="https://images.unsplash.com/..." required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <label class="font-semibold text-slate-600 block mb-1">URL da Imagem Online do Medicamento (Internet) *</label>
+                            <input type="text" id="prod-image" placeholder="https://exemplo.com/imagem-do-medicamento.jpg" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
+                            <span class="text-[10px] text-slate-400 mt-1 block">Insira o link direto de uma imagem da internet. O site irá buscá-la automaticamente para todos os utilizadores.</span>
                         </div>
                         <div class="sm:col-span-2">
                             <label class="font-semibold text-slate-600 block mb-1">Descrição</label>
@@ -438,7 +440,7 @@
 
                         <div class="sm:col-span-2 flex gap-2 pt-2">
                             <button type="submit" class="flex-1 bg-pharmacy-600 hover:bg-pharmacy-700 text-white font-bold py-2.5 rounded-xl transition text-xs shadow-md">
-                                Salvar Produto Globalmente na Nuvem
+                                Salvar Medicamento na Nuvem Global
                             </button>
                             <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-300">
                                 Limpar
@@ -450,15 +452,15 @@
                 <!-- Tabela de Produtos -->
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center justify-between">
-                        <span><i class="fa-solid fa-boxes-stacked text-slate-600"></i> Catálogo Cadastrado (<span id="admin-prod-count">0</span>)</span>
-                        <span class="text-xs text-slate-400 font-normal">Sincronizado globalmente</span>
+                        <span><i class="fa-solid fa-boxes-stacked text-slate-600"></i> Medicamentos na Nuvem (<span id="admin-prod-count">0</span>)</span>
+                        <span class="text-xs text-slate-400 font-normal">Sincronização permanente</span>
                     </h4>
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs text-left text-slate-600">
                             <thead class="bg-slate-100 text-slate-700 font-semibold uppercase">
                                 <tr>
-                                    <th class="p-2.5 rounded-l-lg">Produto</th>
+                                    <th class="p-2.5 rounded-l-lg">Medicamento</th>
                                     <th class="p-2.5">Categoria</th>
                                     <th class="p-2.5">Preço (Kz)</th>
                                     <th class="p-2.5 text-center">Estoque</th>
@@ -516,64 +518,6 @@
         let productToDeleteId = null;
         let authUser = null;
 
-        const defaultProducts = [
-            {
-                id: 'prod_1',
-                name: 'Paracetamol 500mg',
-                category: 'remedios',
-                price: 1200,
-                dosage: 'Caixa com 20 comprimidos',
-                image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&fit=crop',
-                description: 'Indicado para diminuição da febre e alívio de dores leves a moderadas.',
-                prescription: false,
-                outOfStock: false
-            },
-            {
-                id: 'prod_2',
-                name: 'Amoxicilina 500mg',
-                category: 'remedios',
-                price: 3500,
-                dosage: 'Caixa com 15 cápsulas',
-                image: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&fit=crop',
-                description: 'Antibiótico sob receita médica para o combate de infecções bacterianas.',
-                prescription: true,
-                outOfStock: false
-            },
-            {
-                id: 'prod_3',
-                name: 'Vitamina C + Zinco Efervescente',
-                category: 'suplementos',
-                price: 2800,
-                dosage: 'Tubo com 10 comprimidos',
-                image: 'https://images.unsplash.com/photo-1550572017-edd951aa8f72?w=500&fit=crop',
-                description: 'Suplemento vitamínico para fortalecimento da imunidade.',
-                prescription: false,
-                outOfStock: false
-            },
-            {
-                id: 'prod_4',
-                name: 'Gel de Banho Hidratante 500ml',
-                category: 'higiene',
-                price: 4200,
-                dosage: 'Frasco 500ml',
-                image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&fit=crop',
-                description: 'Limpeza e hidratação profunda da pele.',
-                prescription: false,
-                outOfStock: false
-            },
-            {
-                id: 'prod_5',
-                name: 'Fralda Infantil Tam M',
-                category: 'bebe',
-                price: 6800,
-                dosage: 'Pacote com 32 unidades',
-                image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=500&fit=crop',
-                description: 'Proteção até 12 horas para a pele delicada do bebê.',
-                prescription: false,
-                outOfStock: false
-            }
-        ];
-
         async function startApp() {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -599,13 +543,10 @@
                     fetched.push({ id: docSnap.id, ...docSnap.data() });
                 });
 
-                if (fetched.length === 0 && snapshot.empty) {
-                    seedDefaultProducts();
-                } else {
-                    products = fetched;
-                    renderProducts();
-                    renderAdminProductsList();
-                }
+                // Apenas guarda e exibe o que o administrador colocou na nuvem. Nunca apaga por si só.
+                products = fetched;
+                renderProducts();
+                renderAdminProductsList();
             }, (error) => {
                 console.error("Erro na sincronização:", error);
             });
@@ -620,17 +561,6 @@
             });
         }
 
-        async function seedDefaultProducts() {
-            try {
-                for (const p of defaultProducts) {
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', p.id);
-                    await setDoc(docRef, p);
-                }
-            } catch (e) {
-                console.error("Erro ao semear produtos padrão:", e);
-            }
-        }
-
         async function sha256(str) {
             const encoder = new TextEncoder();
             const data = encoder.encode(str);
@@ -640,7 +570,6 @@
         }
 
         function initPWA() {
-            // Ícone PWA verde de alta qualidade com cruz médica (Sem fundo preto)
             const iconSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23064e3b' flood-opacity='0.3'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.5'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%23a7f3d0'/></svg>`;
             
             const manifestObj = {
@@ -702,7 +631,7 @@
                 return matchesCat && matchesSearch;
             });
 
-            countEl.textContent = `${filtered.length} produto(s) na nuvem global`;
+            countEl.textContent = `${filtered.length} medicamento(s) na nuvem`;
 
             if (filtered.length === 0) {
                 grid.innerHTML = '';
@@ -892,7 +821,7 @@
                     <div class="text-center py-12 text-slate-400">
                         <i class="fa-solid fa-basket-shopping text-5xl mb-3 opacity-30"></i>
                         <p class="font-medium text-slate-600 text-sm">Seu carrinho está vazio</p>
-                        <p class="text-xs mt-1">Escolha produtos no catálogo para fazer sua compra.</p>
+                        <p class="text-xs mt-1">Escolha medicamentos no catálogo para fazer sua compra.</p>
                     </div>
                 `;
                 totalEl.textContent = '0 Kz';
@@ -933,7 +862,7 @@
 
         function checkoutWhatsApp() {
             if (cart.length === 0) {
-                showToast('Adicione produtos ao carrinho antes de finalizar!', 'error');
+                showToast('Adicione medicamentos ao carrinho antes de finalizar!', 'error');
                 return;
             }
 
@@ -957,7 +886,7 @@
                 text += `🏦 *IBAN Utilizado:* 000600007086045530142\n`;
             }
             text += `------------------------------------\n\n`;
-            text += `📦 *PRODUTOS SELECIONADOS:*\n`;
+            text += `📦 *MEDICAMENTOS SELECIONADOS:*\n`;
 
             let total = 0;
             cart.forEach((item, idx) => {
@@ -1060,7 +989,7 @@
                 closeAdminAuth();
                 if (pwdInput) pwdInput.value = '';
                 openAdminPanel();
-                showToast('Sessão de Administrador Autenticada!');
+                showToast('Painel de Administrador Autenticado!');
             } else {
                 showToast('Palavra-passe incorreta!', 'error');
             }
@@ -1083,7 +1012,7 @@
                 listContainer.innerHTML = `
                     <tr>
                         <td colspan="5" class="p-6 text-center text-slate-400">
-                            Nenhum produto cadastrado no momento. Adicione novos produtos acima.
+                            Nenhum medicamento cadastrado. Adicione produtos acima para que apareçam para todos os clientes.
                         </td>
                     </tr>
                 `;
@@ -1116,10 +1045,10 @@
                         </button>
                     </td>
                     <td class="p-2.5 text-center space-x-1">
-                        <button onclick="editProduct('${p.id}')" class="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition" title="Editar Produto">
+                        <button onclick="editProduct('${p.id}')" class="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition" title="Editar Medicamento">
                             <i class="fa-solid fa-pen"></i>
                         </button>
-                        <button onclick="askDeleteProduct('${p.id}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition active:scale-95 cursor-pointer" title="Apagar Produto">
+                        <button onclick="askDeleteProduct('${p.id}')" class="p-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition active:scale-95 cursor-pointer" title="Apagar Medicamento">
                             <span class="text-base">🗑</span>
                         </button>
                     </td>
@@ -1134,7 +1063,7 @@
             if (!product) return;
 
             productToDeleteId = targetId;
-            document.getElementById('delete-confirm-text').textContent = `Deseja apagar permanentemente o produto "${product.name}" da nuvem?`;
+            document.getElementById('delete-confirm-text').textContent = `Deseja apagar permanentemente o medicamento "${product.name}" da nuvem?`;
             
             const confirmBtn = document.getElementById('confirm-delete-btn');
             confirmBtn.onclick = () => executeDeleteProduct();
@@ -1160,7 +1089,7 @@
                 saveCart();
 
                 closeDeleteConfirmModal();
-                showToast('Produto apagado da nuvem com sucesso!', 'success');
+                showToast('Medicamento apagado da nuvem com sucesso!', 'success');
             } catch (err) {
                 console.error("Erro ao apagar produto:", err);
                 showToast('Erro ao apagar na nuvem.', 'error');
@@ -1226,7 +1155,7 @@
                 const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'products', targetId);
                 await setDoc(docRef, productObj);
 
-                showToast(idInput ? 'Produto atualizado na nuvem!' : 'Novo produto publicado permanentemente na nuvem!');
+                showToast(idInput ? 'Medicamento atualizado na nuvem!' : 'Medicamento guardado na nuvem global!');
                 resetAdminForm();
                 renderAdminProductsList();
                 renderProducts();
@@ -1245,7 +1174,6 @@
             document.getElementById('prod-price').value = p.price;
             document.getElementById('prod-category').value = p.category;
             document.getElementById('prod-dosage').value = p.dosage || '';
-            document.index('prod-image').value = p.image;
             document.getElementById('prod-image').value = p.image;
             document.getElementById('prod-desc').value = p.description || '';
             document.getElementById('prod-prescription').checked = p.prescription;
