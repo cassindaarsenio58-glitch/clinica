@@ -7,15 +7,40 @@
     <meta name="theme-color" content="#059669">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Compre remédios e produtos de saúde na FarmáciaFranciel em Angola. Sincronização em tempo real e vendas via WhatsApp, Multicaixa Express e IBAN.">
+    <meta name="description" content="Compre remédios e produtos de saúde na FarmáciaFranciel em Angola. Sincronização em tempo real.">
     
-    <!-- Ícone Médico Verde Dinâmico e Vibrante -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient><filter id='glow' x='-20%' y='-20%' width='140%' height='140%'><feDropShadow dx='0' dy='8' stdDeviation='12' flood-color='%23064e3b' flood-opacity='0.3'/></filter></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><path d='M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z' fill='none' stroke='%23ffffff' stroke-width='16' stroke-opacity='0.5'/><g filter='url(%23glow)' fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g><path d='M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z' fill='%2334d399'/><path d='M150 330 C 120 370, 140 400, 180 390 C 210 380, 190 340, 150 330 Z' fill='%23a7f3d0'/></svg>">
+    <!-- Ícone Médico -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='bgGrad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23059669'/><stop offset='50%' stop-color='%2310b981'/><stop offset='100%' stop-color='%23047857'/></linearGradient></defs><rect width='512' height='512' rx='140' fill='url(%23bgGrad)'/><g fill='%23ffffff'><rect x='226' y='146' width='60' height='180' rx='18'/><rect x='166' y='206' width='180' height='60' rx='18'/></g></svg>">
     
     <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK (v9 Modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        // COLOQUE AQUI AS SUAS CREDENCIAIS DO FIREBASE (Crie um projeto grátis em firebase.google.com)
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY_AQUI",
+            authDomain: "seu-projeto.firebaseapp.com",
+            projectId: "seu-projeto",
+            storageBucket: "seu-projeto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123:web:abc"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Disponibilizar globalmente para o script da página
+        window.db = db;
+        window.firebaseCollections = { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc };
+        window.dispatchEvent(new Event('firebase-ready'));
+    </script>
 
     <script>
         tailwind.config = {
@@ -23,85 +48,40 @@
                 extend: {
                     colors: {
                         pharmacy: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b'
+                            50: '#ecfdf5', 100: '#d1fae5', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b'
                         }
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
 
     <style>
-        body {
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            padding-bottom: 75px;
-        }
-
-        @media (min-width: 768px) {
-            body {
-                padding-bottom: 0px;
-            }
-        }
-
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .app-shadow {
-            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
-        }
-        
-        .card-shadow {
-            box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
-        }
-
-        @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .animate-pulse-subtle {
-            animation: pulse-subtle 3s infinite ease-in-out;
-        }
+        body { user-select: none; -webkit-tap-highlight-color: transparent; font-family: 'Inter', sans-serif; background-color: #f8fafc; padding-bottom: 75px; }
+        @media (min-width: 768px) { body { padding-bottom: 0px; } }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .app-shadow { box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06); }
+        .card-shadow { box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05); }
     </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-pharmacy-500 selection:text-white">
+<body class="text-slate-800 antialiased">
 
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Logo & Nome -->
                 <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 via-pharmacy-600 to-emerald-800 text-white flex items-center justify-center shadow-md shadow-pharmacy-600/30 p-1.5">
-                        <svg class="w-full h-full" viewBox="0 0 512 512">
-                            <path d="M256 70 C 160 70, 110 130, 110 240 C 110 350, 210 425, 256 450 C 302 425, 402 350, 402 240 C 402 130, 352 70, 256 70 Z" fill="none" stroke="#ffffff" stroke-width="20" stroke-opacity="0.5"/>
-                            <rect x="226" y="146" width="60" height="180" rx="18" fill="#ffffff"/>
-                            <rect x="166" y="206" width="180" height="60" rx="18" fill="#ffffff"/>
-                            <path d="M330 140 C 370 110, 410 130, 410 170 C 410 210, 360 210, 330 140 Z" fill="#34d399"/>
-                        </svg>
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center shadow-md">
+                        <i class="fa-solid fa-staff-snake text-lg"></i>
                     </div>
                     <div>
                         <h1 class="font-extrabold text-lg leading-none tracking-tight text-slate-900">
                             Farmácia<span class="text-pharmacy-600">Franciel</span>
                         </h1>
                         <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1 mt-0.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
-                            Angola • Sincronizado em Tempo Real
+                            <span id="sync-status" class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
+                            Sincronização Nuvem Ativa
                         </p>
                     </div>
                 </div>
@@ -109,470 +89,212 @@
                 <div class="flex items-center gap-2">
                     <button onclick="toggleCartModal(true)" class="relative p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition">
                         <i class="fa-solid fa-basket-shopping text-xl"></i>
-                        <span id="cart-badge" class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white scale-0 transition-transform duration-200">
-                            0
-                        </span>
+                        <span id="cart-badge" class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
                     </button>
-
-                    <button onclick="openAdminAuth()" class="p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 transition" title="Acesso Administrador">
-                        <i class="fa-solid fa-user-shield text-lg text-pharmacy-600"></i>
+                    <button onclick="openAdminAuth()" class="flex items-center gap-1 px-3 py-2 rounded-xl bg-pharmacy-50 text-pharmacy-700 hover:bg-pharmacy-100 font-bold text-xs transition">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span class="hidden sm:inline">Área do Dono</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Banner de Comunicado Sincronizado -->
-        <div id="admin-notice-banner" class="hidden bg-emerald-600 text-white text-xs font-medium py-1.5 px-4 text-center relative flex items-center justify-center gap-2 shadow-sm">
+        <div id="admin-notice-banner" class="hidden bg-emerald-600 text-white text-xs font-medium py-1.5 px-4 text-center relative flex items-center justify-center gap-2">
             <i class="fa-solid fa-bullhorn"></i>
-            <span id="admin-notice-text">Bem-vindo à FarmáciaFranciel! Entregas rápidas em Luanda.</span>
-            <button onclick="closeNoticeBanner()" class="absolute right-2 top-1 text-white/80 hover:text-white px-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <span id="admin-notice-text">Bem-vindo à FarmáciaFranciel!</span>
+            <button onclick="closeNoticeBanner()" class="absolute right-2 text-white/80 hover:text-white px-2"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-
+        <!-- Pesquisa e Categorias -->
         <div class="mb-5 space-y-3">
             <div class="relative">
-                <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Pesquisar produto, medicamento, vitamina..." 
-                    class="w-full pl-11 pr-10 py-3.5 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-pharmacy-500 focus:border-transparent transition-all">
+                <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Pesquisar remédio, vitamina..." class="w-full pl-11 pr-10 py-3.5 bg-white border border-slate-200 rounded-2xl shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-pharmacy-500">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Categorias -->
             <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar py-1 text-sm font-medium">
-                <button onclick="filterCategory('all')" class="category-btn active bg-pharmacy-600 text-white px-4 py-2 rounded-xl whitespace-nowrap shadow-sm transition-all" data-cat="all">
-                    Todos os Produtos
-                </button>
-                <button onclick="filterCategory('remedios')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap hover:bg-slate-50 transition-all" data-cat="remedios">
-                    💊 Remédios
-                </button>
-                <button onclick="filterCategory('suplementos')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap hover:bg-slate-50 transition-all" data-cat="suplementos">
-                    🏋️ Vitaminas & Suplementos
-                </button>
-                <button onclick="filterCategory('higiene')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap hover:bg-slate-50 transition-all" data-cat="higiene">
-                    🧼 Higiene
-                </button>
-                <button onclick="filterCategory('bebe')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap hover:bg-slate-50 transition-all" data-cat="bebe">
-                    🍼 Bebê
-                </button>
+                <button onclick="filterCategory('all')" class="category-btn active bg-pharmacy-600 text-white px-4 py-2 rounded-xl whitespace-nowrap shadow-sm" data-cat="all">Todos</button>
+                <button onclick="filterCategory('remedios')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap" data-cat="remedios">💊 Remédios</button>
+                <button onclick="filterCategory('suplementos')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap" data-cat="suplementos">🏋️ Suplementos</button>
+                <button onclick="filterCategory('higiene')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap" data-cat="higiene">🧼 Higiene</button>
+                <button onclick="filterCategory('bebe')" class="category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap" data-cat="bebe">🍼 Bebê</button>
             </div>
         </div>
 
-        <!-- Banner de Destaque -->
-        <div class="mb-6 rounded-2xl bg-gradient-to-r from-pharmacy-800 via-pharmacy-700 to-emerald-800 text-white p-5 sm:p-6 shadow-xl relative overflow-hidden">
+        <!-- Banner Informativo / IBAN -->
+        <div class="mb-6 rounded-2xl bg-gradient-to-r from-pharmacy-800 to-emerald-800 text-white p-5 shadow-xl relative overflow-hidden">
             <div class="relative z-10 max-w-xl">
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                    <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">Atendimento Rápido</span>
-                    <span class="bg-emerald-400 text-slate-900 text-[11px] font-bold px-2.5 py-0.5 rounded-md uppercase">WhatsApp 947 705 474</span>
-                </div>
-                <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Medicamentos Atualizados em Tempo Real!</h2>
-                <p class="text-white/90 text-xs sm:text-sm mb-4">Pague em <strong>Mão (Na Entrega)</strong>, por <strong>Multicaixa Express</strong> ou <strong>Transferência IBAN</strong>.</p>
-                
-                <!-- Caixa do IBAN -->
-                <div class="bg-black/25 backdrop-blur-md rounded-xl p-3 border border-white/20 mb-4 text-xs space-y-1">
-                    <div class="flex items-center justify-between font-semibold">
-                        <span><i class="fa-solid fa-building-columns mr-1"></i> IBAN FarmáciaFranciel:</span>
-                        <button onclick="copyIBAN()" class="bg-white/20 hover:bg-white/30 text-white px-2.5 py-1 rounded text-[11px] transition flex items-center gap-1 font-bold">
-                            <i class="fa-regular fa-copy"></i> Copiar
-                        </button>
-                    </div>
-                    <div class="font-mono text-sm tracking-wider font-bold text-emerald-300 select-all" id="iban-text">000600007086045530142</div>
-                </div>
-
-                <a href="https://wa.me/244947705474?text=Ol%C3%A1%2C%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20rem%C3%A9dios%20na%20Farm%C3%A1ciaFranciel" target="_blank" 
-                   class="inline-flex items-center gap-2 bg-emerald-400 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm hover:bg-emerald-300 transition shadow-md">
-                    <i class="fa-brands fa-whatsapp text-lg text-slate-900"></i> Falar com o Dono no WhatsApp (+244 947 705 474)
-                </a>
+                <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded uppercase">WhatsApp: 947 705 474</span>
+                <h2 class="text-xl font-extrabold mt-1">Medicamentos em Tempo Real</h2>
+                <p class="text-white/90 text-xs mt-1">IBAN para transferência: <strong class="text-emerald-300 font-mono" id="iban-text">000600007086045530142</strong></p>
+                <button onclick="copyIBAN()" class="mt-2 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded text-xs font-bold"><i class="fa-regular fa-copy"></i> Copiar IBAN</button>
             </div>
-            <i class="fa-solid fa-heart-pulse absolute -right-6 -bottom-8 text-white/10 text-9xl"></i>
         </div>
 
+        <!-- Lista de Produtos -->
         <div class="mb-8">
             <div class="flex items-center justify-between mb-4">
-                <h3 id="section-title" class="font-bold text-lg text-slate-900">Catálogo Oficial de Medicamentos</h3>
+                <h3 class="font-bold text-lg text-slate-900">Catálogo em Direto</h3>
                 <span id="product-count" class="text-xs text-slate-500 font-medium">A sincronizar...</span>
             </div>
-
-            <!-- Grid de Produtos -->
-            <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-                <!-- Preenchido via Firebase em Tempo Real -->
-            </div>
-
+            <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
             <div id="no-products" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-                <h4 class="font-bold text-slate-700">Nenhum medicamento cadastrado ainda</h4>
-                <p class="text-slate-500 text-xs mt-1">O administrador pode cadastrar os produtos e aparecerão em todos os dispositivos instantaneamente.</p>
-                <button onclick="openAdminAuth()" class="mt-4 px-4 py-2 bg-pharmacy-600 text-white text-xs font-semibold rounded-xl shadow">Aceder como Administrador</button>
+                <h4 class="font-bold text-slate-700">Nenhum medicamento disponível</h4>
             </div>
         </div>
     </main>
 
-    <!-- Botão Flutuante WhatsApp -->
-    <a href="https://wa.me/244947705474?text=Ol%C3%A1%21%20Quero%20fazer%20uma%20compra%20na%20Farm%C3%A1ciaFranciel." 
-       target="_blank" 
-       title="Falar com o Dono no WhatsApp"
-       class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center text-3xl shadow-xl hover:bg-emerald-600 hover:scale-105 transition-all animate-pulse-subtle">
+    <!-- WhatsApp Flutuante -->
+    <a href="https://wa.me/244947705474" target="_blank" class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40 w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center text-3xl shadow-xl hover:bg-emerald-600 transition">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Navegação Mobile Inferior -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 app-shadow px-4 py-2">
-        <div class="flex items-center justify-around">
-            <button onclick="switchTab('home')" class="flex flex-col items-center gap-1 text-pharmacy-600 font-semibold text-[11px]">
-                <i class="fa-solid fa-house text-lg"></i>
-                <span>Início</span>
-            </button>
-            <button onclick="toggleCartModal(true)" class="flex flex-col items-center gap-1 text-slate-500 hover:text-pharmacy-600 font-medium text-[11px] relative">
-                <i class="fa-solid fa-cart-shopping text-lg"></i>
-                <span>Carrinho</span>
-                <span id="nav-cart-badge" class="absolute -top-1 right-2 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center scale-0">0</span>
-            </button>
-            <a href="https://wa.me/244947705474" target="_blank" class="flex flex-col items-center gap-1 text-slate-500 hover:text-emerald-600 font-medium text-[11px]">
-                <i class="fa-brands fa-whatsapp text-lg"></i>
-                <span>WhatsApp</span>
-            </a>
-        </div>
-    </nav>
-
     <!-- Modal Carrinho -->
-    <div id="cart-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex justify-end transition-opacity duration-300">
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex justify-end">
         <div class="w-full max-w-md bg-white h-full flex flex-col shadow-2xl">
-            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-basket-shopping text-pharmacy-600 text-lg"></i>
-                    <h3 class="font-bold text-slate-800">Seu Carrinho de Compras</h3>
-                </div>
-                <button onclick="toggleCartModal(false)" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+            <div class="p-4 border-b flex items-center justify-between bg-slate-50">
+                <h3 class="font-bold text-slate-800">Carrinho de Compras</h3>
+                <button onclick="toggleCartModal(false)" class="p-2 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-
-            <!-- Lista de Itens -->
-            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3">
-                <!-- Preenchido via JS -->
-            </div>
-
-            <!-- Finalização -->
-            <div class="p-4 border-t border-slate-100 bg-white space-y-3">
-                <div class="space-y-2">
-                    <label class="text-xs font-semibold text-slate-700 block">Seus dados para a entrega:</label>
-                    <input type="text" id="customer-name" placeholder="Seu Nome Completo *" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-pharmacy-500 outline-none">
-                    <input type="text" id="customer-address" placeholder="Bairro / Ponto de Referência *" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-pharmacy-500 outline-none">
-                    
-                    <label class="text-xs font-semibold text-slate-700 block pt-1">Forma de Pagamento Pretendida:</label>
-                    <select id="payment-method" onchange="togglePaymentInfo()" class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-1 focus:ring-pharmacy-500 outline-none">
-                        <option value="em_mao">💵 Pagamento em Mão (Na Entrega)</option>
-                        <option value="express">📱 Multicaixa Express</option>
-                        <option value="iban">🏦 Transferência por IBAN</option>
-                    </select>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+            <div class="p-4 border-t bg-white space-y-3">
+                <input type="text" id="customer-name" placeholder="Seu Nome Completo *" class="w-full text-xs p-2.5 bg-slate-50 border rounded-xl outline-none">
+                <input type="text" id="customer-address" placeholder="Bairro / Morada *" class="w-full text-xs p-2.5 bg-slate-50 border rounded-xl outline-none">
+                <div class="flex justify-between font-bold text-slate-900">
+                    <span>Total:</span>
+                    <span id="cart-total" class="text-pharmacy-700">0 Kz</span>
                 </div>
-
-                <div id="iban-payment-info" class="hidden p-3 bg-pharmacy-50 rounded-xl border border-pharmacy-200 text-xs text-pharmacy-900 space-y-1">
-                    <p class="font-bold flex items-center justify-between">
-                        <span>IBAN para Transferência:</span>
-                        <button onclick="copyIBAN()" class="bg-pharmacy-600 text-white text-[10px] px-2 py-0.5 rounded">Copiar</button>
-                    </p>
-                    <p class="font-mono font-bold text-slate-800">000600007086045530142</p>
-                    <p class="text-[10px] text-slate-500">Envie o comprovante de transferência diretamente na conversa do WhatsApp.</p>
-                </div>
-
-                <div class="border-t border-dashed border-slate-200 pt-2 flex justify-between items-center font-bold text-slate-900 text-base">
-                    <span>Total do Pedido:</span>
-                    <span id="cart-total" class="text-pharmacy-700 text-lg">0 Kz</span>
-                </div>
-
-                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition text-sm">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span>Comprar via WhatsApp (947 705 474)</span>
+                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pedido via WhatsApp
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Detalhes do Produto -->
-    <div id="product-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl relative">
-            <button onclick="closeProductModal()" class="absolute top-3 right-3 z-10 bg-white/80 backdrop-blur-md text-slate-700 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-white">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="product-modal-content"></div>
-        </div>
-    </div>
-
-    <!-- Modal Autenticação Administrador -->
+    <!-- Painel Administrador (Dono) -->
     <div id="admin-auth-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl">
-            <div class="text-center mb-4">
-                <div class="w-12 h-12 bg-pharmacy-50 text-pharmacy-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <h3 class="font-bold text-lg text-slate-900">Painel do Administrador</h3>
-                <p class="text-xs text-slate-500 mt-1">Acesso exclusivo para gerenciar medicamentos em tempo real.</p>
-            </div>
-
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-                <div>
-                    <label class="text-xs font-semibold text-slate-700 block mb-1">Palavra-passe de Acesso *</label>
-                    <input type="password" id="admin-password" placeholder="Digite a palavra-passe..." required class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-pharmacy-500 outline-none">
-                </div>
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+            <h3 class="font-bold text-lg text-center">Área do Dono</h3>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                <input type="password" id="admin-password" placeholder="Palavra-passe (20282franciel)" required class="w-full text-xs p-3 bg-slate-50 border rounded-xl outline-none">
                 <div class="flex gap-2">
-                    <button type="button" onclick="closeAdminAuth()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="flex-1 bg-pharmacy-600 hover:bg-pharmacy-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md shadow-pharmacy-600/30">
-                        Entrar
-                    </button>
+                    <button type="button" onclick="closeAdminAuth()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-bold">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-pharmacy-600 text-white py-2.5 rounded-xl text-xs font-bold">Entrar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal de Exclusão -->
-    <div id="delete-confirm-modal" class="fixed inset-0 z-[60] bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl text-center space-y-4">
-            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-2xl">
-                🗑️
-            </div>
-            <div>
-                <h3 class="font-bold text-lg text-slate-900">Apagar Medicamento?</h3>
-                <p class="text-xs text-slate-500 mt-1">Esta ação removerá o produto do servidor e atualizará todos os usuários instantaneamente.</p>
-            </div>
-            <div class="flex gap-2 pt-2">
-                <button type="button" onclick="closeDeleteConfirmModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
-                    Cancelar
-                </button>
-                <button type="button" id="confirm-delete-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md shadow-red-600/30">
-                    Sim, Apagar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Painel Administrador -->
     <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6">
         <div class="bg-white rounded-2xl max-w-4xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="bg-pharmacy-500 text-white p-2 rounded-lg"><i class="fa-solid fa-sliders"></i></span>
-                    <div>
-                        <h3 class="font-bold text-base">FarmáciaFranciel - Gestão Sincronizada em Tempo Real</h3>
-                        <p class="text-xs text-slate-400">Qualquer alteração aqui aparecerá imediatamente no Chrome, Safari e app de todos os clientes</p>
-                    </div>
-                </div>
-                <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white p-2">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+                <h3 class="font-bold">Painel de Controlo em Tempo Real (Admin)</h3>
+                <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-
             <div class="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-50 space-y-6">
-
-                <!-- Comunicado do Topo -->
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
-                    <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-bullhorn text-emerald-600"></i> Atualizar Aviso Global para os Clientes
-                    </h4>
-                    <div class="flex gap-2">
-                        <input type="text" id="notice-input" placeholder="Ex: Novos remédios chegaram! Entrega ao domicílio em Luanda." class="flex-1 text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                        <button onclick="saveNotice()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 rounded-xl transition">Publicar Aviso</button>
-                    </div>
-                </div>
-
-                <!-- Formulário do Produto -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-                    <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-plus-circle text-pharmacy-600"></i> <span id="form-title-text">Cadastrar Novo Medicamento Oficial</span>
-                    </h4>
-
+                <!-- Formulário Adicionar/Editar -->
+                <div class="bg-white p-5 rounded-xl border shadow-sm">
+                    <h4 class="font-bold text-sm text-slate-800 mb-3"><i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Adicionar / Atualizar Remédio</h4>
                     <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                         <input type="hidden" id="prod-id">
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-1">Nome do Medicamento *</label>
-                            <input type="text" id="prod-name" placeholder="Ex: Paracetamol 500mg" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                        </div>
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-1">Preço em Kwanzas (Kz) *</label>
-                            <input type="number" id="prod-price" placeholder="Ex: 2500" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                        </div>
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-1">Categoria *</label>
-                            <select id="prod-category" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                                <option value="remedios">💊 Remédios</option>
-                                <option value="suplementos">🏋 Vitaminas & Suplementos</option>
-                                <option value="higiene">🧼 Higiene & Cuidados</option>
-                                <option value="bebe">🍼 Bebê & Mamãe</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="font-semibold text-slate-600 block mb-1">Dosagem / Apresentação</label>
-                            <input type="text" id="prod-dosage" placeholder="Ex: Caixa com 20 comprimidos" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="font-semibold text-slate-600 block mb-1">URL da Imagem Online do Medicamento (Internet) *</label>
-                            <input type="text" id="prod-image" placeholder="https://images.unsplash.com/photo-..." required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none">
-                            <span class="text-[10px] text-slate-400 mt-1 block">Insira o link direto de uma imagem da internet.</span>
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="font-semibold text-slate-600 block mb-1">Descrição</label>
-                            <textarea id="prod-desc" rows="2" placeholder="Informações de utilização do medicamento..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"></textarea>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-4 sm:col-span-2 pt-1">
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="prod-prescription" class="w-4 h-4 text-pharmacy-600 rounded">
-                                <label for="prod-prescription" class="font-medium text-slate-700">Requer Receita Médica</label>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="prod-out-of-stock" class="w-4 h-4 text-red-600 rounded">
-                                <label for="prod-out-of-stock" class="font-medium text-red-600">Marcar como ESGOTADO</label>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2 flex gap-2 pt-2">
-                            <button type="submit" id="save-btn-text" class="flex-1 bg-pharmacy-600 hover:bg-pharmacy-700 text-white font-bold py-2.5 rounded-xl transition text-xs shadow-md">
-                                Publicar Medicamento no Servidor
-                            </button>
-                            <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-300">
-                                Limpar
-                            </button>
+                        <input type="text" id="prod-name" placeholder="Nome do Medicamento *" required class="p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        <input type="number" id="prod-price" placeholder="Preço em Kz *" required class="p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        <select id="prod-category" class="p-2.5 bg-slate-50 border rounded-xl outline-none">
+                            <option value="remedios">💊 Remédios</option>
+                            <option value="suplementos">🏋️ Suplementos</option>
+                            <option value="higiene">🧼 Higiene</option>
+                            <option value="bebe">🍼 Bebê</option>
+                        </select>
+                        <input type="text" id="prod-dosage" placeholder="Apresentação (Ex: Caixa c/ 20)" class="p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        <input type="text" id="prod-image" placeholder="URL da Imagem *" required class="sm:col-span-2 p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        <textarea id="prod-desc" placeholder="Descrição do remédio..." rows="2" class="sm:col-span-2 p-2.5 bg-slate-50 border rounded-xl outline-none"></textarea>
+                        <div class="sm:col-span-2 flex gap-2">
+                            <button type="submit" class="flex-1 bg-pharmacy-600 text-white font-bold py-2.5 rounded-xl">Salvar na Nuvem (Sincronizar)</button>
+                            <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 rounded-xl font-bold">Limpar</button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Tabela de Produtos -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-                    <h4 class="font-bold text-sm text-slate-800 flex items-center justify-between">
-                        <span><i class="fa-solid fa-boxes-stacked text-slate-600"></i> Produtos Ativos no Servidor (<span id="admin-prod-count">0</span>)</span>
-                        <span class="text-xs text-emerald-600 font-bold"><i class="fa-solid fa-circle-nodes"></i> Sincronizado</span>
-                    </h4>
-
+                <!-- Tabela Gestão -->
+                <div class="bg-white p-5 rounded-xl border shadow-sm">
+                    <h4 class="font-bold text-sm text-slate-800 mb-3">Produtos na Base de Dados</h4>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left text-slate-600">
-                            <thead class="bg-slate-100 text-slate-700 font-semibold uppercase">
+                        <table class="w-full text-xs text-left">
+                            <thead class="bg-slate-100 uppercase">
                                 <tr>
-                                    <th class="p-2.5 rounded-l-lg">Medicamento</th>
-                                    <th class="p-2.5">Categoria</th>
-                                    <th class="p-2.5">Preço (Kz)</th>
-                                    <th class="p-2.5 text-center">Estoque</th>
-                                    <th class="p-2.5 text-center rounded-r-lg">Ações</th>
+                                    <th class="p-2">Nome</th>
+                                    <th class="p-2">Preço</th>
+                                    <th class="p-2 text-center">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-products-list" class="divide-y divide-slate-100">
-                                <!-- Preenchido via Firebase -->
-                            </tbody>
+                            <tbody id="admin-products-list" class="divide-y"></tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Notificações Toast -->
-    <div id="toast" class="fixed top-20 right-4 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-x-full transition-transform duration-300">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-base" id="toast-icon"></i>
-        <span id="toast-msg">Operação realizada com sucesso!</span>
+    <div id="toast" class="fixed top-20 right-4 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl transform translate-x-full transition-transform">
+        <span id="toast-msg">Sucesso!</span>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'farmacia-franciel-store';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDummyKeyForFallbackSimulation12345",
-            authDomain: "dummy.firebaseapp.com",
-            projectId: "dummy-project"
-        };
-
-        let app, db, auth;
+    <!-- Script Principal Ligado ao Firebase -->
+    <script>
+        const ADMIN_PASSWORD = "20282franciel";
         let products = [];
         let cart = JSON.parse(localStorage.getItem('franciel_cart')) || [];
         let currentCategory = 'all';
         let searchQuery = '';
         let adminLoggedIn = false;
-        let deleteTargetId = null;
 
-        // Inicializar Firebase com tratamento robusto
-        async function initFirebase() {
-            try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
+        window.addEventListener('firebase-ready', () => {
+            const { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc } = window.firebaseCollections;
+            const db = window.db;
 
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                // Escutar produtos em tempo real (Firestore onSnapshot)
-                const productsCol = collection(db, 'artifacts', appId, 'public', 'data', 'medicaments');
-                onSnapshot(productsCol, (snapshot) => {
-                    products = [];
-                    snapshot.forEach((docSnap) => {
-                        products.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                    
-                    // Ordenar por ID ou nome caso venha desordenado
-                    products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-
-                    renderProducts();
-                    renderAdminProductsTable();
-                }, (error) => {
-                    console.error("Erro ao sincronizar Firestore:", error);
-                    loadFallbackData();
+            // Ouvir alterações em TEMPO REAL no Firestore (Sincroniza Chrome, Safari e App do Dono instantaneamente)
+            onSnapshot(collection(db, "produtos"), (snapshot) => {
+                products = [];
+                snapshot.forEach((docSnap) => {
+                    products.push({ id: docSnap.id, ...docSnap.data() });
                 });
+                document.getElementById('sync-status').className = "w-2 h-2 rounded-full bg-emerald-500 inline-block";
+                renderProducts();
+                if(document.getElementById('admin-panel-modal').classList.contains('flex')) {
+                    renderAdminProductsTable();
+                }
+            }, (error) => {
+                console.error("Erro ao sincronizar:", error);
+                document.getElementById('sync-status').className = "w-2 h-2 rounded-full bg-red-500 inline-block";
+            });
 
-                // Escutar avisos globais em tempo real
-                const noticeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'notice');
-                onSnapshot(noticeDocRef, (docSnap) => {
-                    if (docSnap.exists() && docSnap.data().text) {
-                        displayNotice(docSnap.data().text);
-                    } else {
-                        document.getElementById('admin-notice-banner').classList.add('hidden');
+            // Aviso em tempo real
+            onSnapshot(collection(db, "config"), (snapshot) => {
+                snapshot.forEach((docSnap) => {
+                    if(docSnap.id === 'aviso' && docSnap.data().texto) {
+                        document.getElementById('admin-notice-text').textContent = docSnap.data().texto;
+                        document.getElementById('admin-notice-banner').classList.remove('hidden');
                     }
-                }, () => {});
-
-            } catch (err) {
-                console.warn("Modo offline ou erro no Firebase, carregando dados locais/padrão:", err);
-                loadFallbackData();
-            }
-        }
-
-        function loadFallbackData() {
-            products = [
-                { id: '1', name: 'Paracetamol 500mg', price: 1500, category: 'remedios', dosage: 'Caixa c/ 20 comprimidos', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60', desc: 'Analgésico e antitérmico eficaz.', prescription: false, outOfStock: false },
-                { id: '2', name: 'Vitamina C 1000mg', price: 3500, category: 'suplementos', dosage: 'Tubo c/ 10 efervescentes', image: 'https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&auto=format&fit=crop&q=60', desc: 'Suplemento vitamínico para imunidade.', prescription: false, outOfStock: false }
-            ];
-            renderProducts();
-            renderAdminProductsTable();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initFirebase();
-            updateCartUI();
+                });
+            });
         });
 
-        // Funções Globais expostas para o escopo window
-        window.renderProducts = function() {
+        function renderProducts() {
             const grid = document.getElementById('products-grid');
             const noProducts = document.getElementById('no-products');
             const countEl = document.getElementById('product-count');
             
             let filtered = products.filter(p => {
                 const matchesCat = currentCategory === 'all' || p.category === currentCategory;
-                const matchesSearch = (p.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                      (p.desc || '').toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
                 return matchesCat && matchesSearch;
             });
 
             countEl.textContent = `${filtered.length} produto(s)`;
-
             if (filtered.length === 0) {
                 grid.innerHTML = '';
                 noProducts.classList.remove('hidden');
@@ -581,349 +303,65 @@
 
             noProducts.classList.add('hidden');
             grid.innerHTML = filtered.map(p => `
-                <div class="bg-white rounded-2xl border border-slate-100 card-shadow overflow-hidden flex flex-col justify-between transition hover:shadow-lg">
-                    <div class="relative cursor-pointer" onclick="openProductModal('${p.id}')">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-44 object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'">
-                        ${p.outOfStock ? '<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">ESGOTADO</span>' : ''}
-                        ${p.prescription ? '<span class="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md"><i class="fa-solid fa-file-prescription"></i> Receita</span>' : ''}
-                    </div>
+                <div class="bg-white rounded-2xl border border-slate-100 card-shadow overflow-hidden flex flex-col justify-between">
+                    <img src="${p.image}" class="w-full h-36 sm:h-44 object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500'">
                     <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                         <div>
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-pharmacy-600 bg-pharmacy-50 px-2 py-0.5 rounded">${p.category}</span>
-                            <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1 line-clamp-1 cursor-pointer" onclick="openProductModal('${p.id}')">${p.name}</h4>
-                            <p class="text-[11px] text-slate-400 mt-0.5">${p.dosage || 'Disponível'}</p>
+                            <span class="text-[10px] font-bold uppercase text-pharmacy-600 bg-pharmacy-50 px-2 py-0.5 rounded">${p.category}</span>
+                            <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1 line-clamp-1">${p.name}</h4>
+                            <p class="text-[11px] text-slate-400">${p.dosage || ''}</p>
                         </div>
-                        <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
-                            <span class="font-extrabold text-slate-900 text-xs sm:text-sm">${Number(p.price || 0).toLocaleString()} Kz</span>
-                            <button onclick="window.addToCart('${p.id}')" ${p.outOfStock ? 'disabled' : ''} class="w-8 h-8 rounded-xl ${p.outOfStock ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-pharmacy-600 hover:bg-pharmacy-700 text-white'} flex items-center justify-center transition shadow">
+                        <div class="mt-3 pt-2 border-t flex items-center justify-between">
+                            <span class="font-extrabold text-slate-900 text-xs sm:text-sm">${Number(p.price).toLocaleString()} Kz</span>
+                            <button onclick="addToCart('${p.id}')" class="w-8 h-8 rounded-xl bg-pharmacy-600 hover:bg-pharmacy-700 text-white flex items-center justify-center shadow">
                                 <i class="fa-solid fa-plus text-xs"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             `).join('');
-        };
-
-        window.filterCategory = function(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                if(btn.dataset.cat === cat) {
-                    btn.className = "category-btn active bg-pharmacy-600 text-white px-4 py-2 rounded-xl whitespace-nowrap shadow-sm transition-all";
-                } else {
-                    btn.className = "category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap hover:bg-slate-50 transition-all";
-                }
-            });
-            window.renderProducts();
-        };
-
-        window.handleSearch = function() {
-            searchQuery = document.getElementById('search-input').value;
-            const clearBtn = document.getElementById('clear-search');
-            if(searchQuery) clearBtn.classList.remove('hidden');
-            else clearBtn.classList.add('hidden');
-            window.renderProducts();
-        };
-
-        window.clearSearch = function() {
-            document.getElementById('search-input').value = '';
-            searchQuery = '';
-            document.getElementById('clear-search').classList.add('hidden');
-            window.renderProducts();
-        };
-
-        // Carrinho
-        window.addToCart = function(id) {
-            const product = products.find(p => p.id === id);
-            if (!product || product.outOfStock) return;
-
-            const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-            saveCartToStorage();
-            updateCartUI();
-            showToast(`"${product.name}" adicionado ao carrinho!`);
-        };
-
-        function saveCartToStorage() {
-            localStorage.setItem('franciel_cart', JSON.stringify(cart));
         }
 
-        function updateCartUI() {
-            const badge = document.getElementById('cart-badge');
-            const navBadge = document.getElementById('nav-cart-badge');
-            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-
-            if (totalItems > 0) {
-                badge.textContent = totalItems;
-                badge.classList.remove('scale-0');
-                navBadge.textContent = totalItems;
-                navBadge.classList.remove('scale-0');
-            } else {
-                badge.classList.add('scale-0');
-                navBadge.classList.add('scale-0');
-            }
-
-            renderCartModalItems();
-        }
-
-        function renderCartModalItems() {
-            const container = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            const totalPrice = cart.reduce((sum, item) => sum + (Number(item.price || 0) * item.qty), 0);
-
-            totalEl.textContent = totalPrice.toLocaleString() + ' Kz';
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12 text-slate-400 space-y-2">
-                        <i class="fa-solid fa-basket-shopping text-4xl text-slate-200"></i>
-                        <p class="text-xs">Seu carrinho está vazio.</p>
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = cart.map(item => `
-                <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                    <div class="flex items-center gap-2">
-                        <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover bg-white">
-                        <div>
-                            <h5 class="font-bold text-xs text-slate-800 line-clamp-1">${item.name}</h5>
-                            <p class="text-[11px] text-pharmacy-700 font-bold">${Number(item.price || 0).toLocaleString()} Kz</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="flex items-center border border-slate-200 bg-white rounded-lg">
-                            <button onclick="window.changeQty('${item.id}', -1)" class="px-2 py-1 text-slate-500 hover:text-slate-800">-</button>
-                            <span class="text-xs font-bold px-1.5">${item.qty}</span>
-                            <button onclick="window.changeQty('${item.id}', 1)" class="px-2 py-1 text-slate-500 hover:text-slate-800">+</button>
-                        </div>
-                        <button onclick="window.removeFromCart('${item.id}')" class="text-red-400 hover:text-red-600 p-1 text-xs">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        window.changeQty = function(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if(item) {
-                item.qty += delta;
-                if(item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== id);
-                }
-                saveCartToStorage();
-                updateCartUI();
-            }
-        };
-
-        window.removeFromCart = function(id) {
-            cart = cart.filter(i => i.id !== id);
-            saveCartToStorage();
-            updateCartUI();
-        };
-
-        window.toggleCartModal = function(show) {
-            const modal = document.getElementById('cart-modal');
-            if(show) {
-                modal.classList.remove('hidden');
-            } else {
-                modal.classList.add('hidden');
-            }
-        };
-
-        window.togglePaymentInfo = function() {
-            const method = document.getElementById('payment-method').value;
-            const ibanInfo = document.getElementById('iban-payment-info');
-            if(method === 'iban' || method === 'express') {
-                ibanInfo.classList.remove('hidden');
-            } else {
-                ibanInfo.classList.add('hidden');
-            }
-        };
-
-        window.copyIBAN = function() {
-            const iban = document.getElementById('iban-text').textContent;
-            navigator.clipboard.writeText(iban);
-            showToast('IBAN copiado com sucesso!');
-        };
-
-        window.checkoutWhatsApp = function() {
-            const name = document.getElementById('customer-name').value.trim();
-            const address = document.getElementById('customer-address').value.trim();
-            const method = document.getElementById('payment-method').value;
-
-            if(!name || !address) {
-                alert('Por favor, preencha o seu Nome Completo e Bairro/Ponto de Referência.');
-                return;
-            }
-
-            if(cart.length === 0) {
-                alert('O seu carrinho está vazio.');
-                return;
-            }
-
-            let text = `*NOVO PEDIDO - FARMÁCIAFRANCIEL*\n\n`;
-            text += `👤 *Cliente:* ${name}\n`;
-            text += `📍 *Entrega:* ${address}\n`;
-            text += `💳 *Pagamento:* ${method === 'em_mao' ? 'Em Mão (Na Entrega)' : method === 'express' ? 'Multicaixa Express' : 'Transferência IBAN'}\n\n`;
-            text += `📦 *ITENS DO PEDIDO:*\n`;
-
-            cart.forEach(i => {
-                text += `• ${i.qty}x ${i.name} (${(Number(i.price || 0) * i.qty).toLocaleString()} Kz)\n`;
-            });
-
-            const total = cart.reduce((sum, item) => sum + (Number(item.price || 0) * item.qty), 0);
-            text += `\n💰 *TOTAL A PAGAR:* ${total.toLocaleString()} Kz`;
-
-            const encoded = encodeURIComponent(text);
-            window.open(`https://wa.me/244947705474?text=${encoded}`, '_blank');
-        };
-
-        // Detalhes do Produto Modal
-        window.openProductModal = function(id) {
-            const p = products.find(item => item.id === id);
-            if(!p) return;
-
-            const modal = document.getElementById('product-modal');
-            const content = document.getElementById('product-modal-content');
-
-            content.innerHTML = `
-                <img src="${p.image}" class="w-full h-56 object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'">
-                <div class="p-5 space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-pharmacy-600 bg-pharmacy-50 px-2.5 py-1 rounded">${p.category}</span>
-                        <span class="font-extrabold text-pharmacy-700 text-lg">${Number(p.price || 0).toLocaleString()} Kz</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 text-base">${p.name}</h3>
-                    <p class="text-xs text-slate-500 font-medium">${p.dosage || ''}</p>
-                    <p class="text-xs text-slate-600 leading-relaxed">${p.desc || 'Sem descrição adicional.'}</p>
-                    ${p.prescription ? '<div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-[11px] font-medium"><i class="fa-solid fa-file-prescription mr-1"></i> Este medicamento pode requerer receita médica no ato da entrega.</div>' : ''}
-                    <button onclick="window.addToCart('${p.id}'); window.closeProductModal();" ${p.outOfStock ? 'disabled' : ''} class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs transition shadow flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-basket-shopping"></i> Adicionar ao Carrinho
-                    </button>
-                </div>
-            `;
-            modal.classList.remove('hidden');
-        };
-
-        window.closeProductModal = function() {
-            document.getElementById('product-modal').classList.add('hidden');
-        };
-
-        // Autenticação Administrador
-        window.openAdminAuth = function() {
-            if(adminLoggedIn) {
-                window.openAdminPanel();
-            } else {
-                document.getElementById('admin-auth-modal').classList.remove('hidden');
-            }
-        };
-
-        window.closeAdminAuth = function() {
-            document.getElementById('admin-auth-modal').classList.add('hidden');
-            document.getElementById('admin-password').value = '';
-        };
-
-        window.handleAdminLogin = function(e) {
+        async function handleSaveProduct(e) {
             e.preventDefault();
-            const pass = document.getElementById('admin-password').value;
-            if(pass === 'franciel2026' || pass === 'admin123') {
-                adminLoggedIn = true;
-                window.closeAdminAuth();
-                window.openAdminPanel();
-                showToast('Acesso de Administrador Autorizado!');
-            } else {
-                alert('Palavra-passe incorreta!');
-            }
-        };
+            const { collection, addDoc, updateDoc, doc } = window.firebaseCollections;
+            const db = window.db;
 
-        window.openAdminPanel = function() {
-            document.getElementById('admin-panel-modal').classList.remove('hidden');
-            renderAdminProductsTable();
-        };
-
-        window.closeAdminPanel = function() {
-            document.getElementById('admin-panel-modal').classList.add('hidden');
-        };
-
-        function renderAdminProductsTable() {
-            const list = document.getElementById('admin-products-list');
-            document.getElementById('admin-prod-count').textContent = products.length;
-
-            if(products.length === 0) {
-                list.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400">Nenhum produto cadastrado no servidor.</td></tr>`;
-                return;
-            }
-
-            list.innerHTML = products.map(p => `
-                <tr>
-                    <td class="p-2.5 flex items-center gap-2">
-                        <img src="${p.image}" class="w-8 h-8 rounded-lg object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'">
-                        <span class="font-bold text-slate-800 line-clamp-1">${p.name}</span>
-                    </td>
-                    <td class="p-2.5 uppercase text-[10px] text-slate-500 font-bold">${p.category}</td>
-                    <td class="p-2.5 font-bold text-slate-900">${Number(p.price || 0).toLocaleString()} Kz</td>
-                    <td class="p-2.5 text-center">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.outOfStock ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-700'}">
-                            ${p.outOfStock ? 'Esgotado' : 'Disponível'}
-                        </span>
-                    </td>
-                    <td class="p-2.5 text-center space-x-1">
-                        <button onclick="window.editProduct('${p.id}')" class="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="window.confirmDeleteProduct('${p.id}')" class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Salvar ou Atualizar no Firestore (Sincronizado globalmente em tempo real)
-        window.handleSaveProduct = async function(e) {
-            e.preventDefault();
             const id = document.getElementById('prod-id').value;
-            const name = document.getElementById('prod-name').value;
-            const price = Number(document.getElementById('prod-price').value);
-            const category = document.getElementById('prod-category').value;
-            const dosage = document.getElementById('prod-dosage').value;
-            const image = document.getElementById('prod-image').value;
-            const desc = document.getElementById('prod-desc').value;
-            const prescription = document.getElementById('prod-prescription').checked;
-            const outOfStock = document.getElementById('prod-out-of-stock').checked;
-
-            const productData = { name, price, category, dosage, image, desc, prescription, outOfStock };
+            const data = {
+                name: document.getElementById('prod-name').value,
+                price: Number(document.getElementById('prod-price').value),
+                category: document.getElementById('prod-category').value,
+                dosage: document.getElementById('prod-dosage').value,
+                image: document.getElementById('prod-image').value,
+                desc: document.getElementById('prod-desc').value
+            };
 
             try {
-                if (db && auth && auth.currentUser) {
-                    const docId = id ? String(id) : 'prod_' + Date.now();
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'medicaments', docId);
-                    await setDoc(docRef, productData);
-                    showToast(id ? 'Medicamento atualizado no servidor!' : 'Novo medicamento publicado no servidor!');
+                if(id) {
+                    await updateDoc(doc(db, "produtos", id), data);
+                    showToast('Produto atualizado na nuvem!');
                 } else {
-                    // Fallback local se o Firebase não estiver ativo
-                    if (id) {
-                        const idx = products.findIndex(p => p.id == id);
-                        if(idx !== -1) products[idx] = { id, ...productData };
-                    } else {
-                        products.push({ id: 'local_' + Date.now(), ...productData });
-                    }
-                    window.renderProducts();
-                    renderAdminProductsTable();
-                    showToast('Salvo localmente (modo offline)');
+                    await addDoc(collection(db, "produtos"), data);
+                    showToast('Novo produto adicionado na nuvem!');
                 }
-                window.resetAdminForm();
+                resetAdminForm();
             } catch (err) {
-                console.error("Erro ao salvar no Firestore:", err);
-                alert("Erro ao salvar no servidor. Verifique a ligação.");
+                alert('Erro ao guardar: ' + err.message);
             }
-        };
+        }
 
-        window.editProduct = function(id) {
+        async function deleteProduct(id) {
+            if(confirm('Tem certeza que deseja apagar este medicamento para todos?')) {
+                const { deleteDoc, doc } = window.firebaseCollections;
+                await deleteDoc(doc(window.db, "produtos", id));
+                showToast('Remédio apagado com sucesso!');
+            }
+        }
+
+        function editProduct(id) {
             const p = products.find(item => item.id === id);
             if(!p) return;
-
             document.getElementById('prod-id').value = p.id;
             document.getElementById('prod-name').value = p.name;
             document.getElementById('prod-price').value = p.price;
@@ -931,96 +369,136 @@
             document.getElementById('prod-dosage').value = p.dosage || '';
             document.getElementById('prod-image').value = p.image;
             document.getElementById('prod-desc').value = p.desc || '';
-            document.getElementById('prod-prescription').checked = p.prescription || false;
-            document.getElementById('prod-out-of-stock').checked = p.outOfStock || false;
+        }
 
-            document.getElementById('form-title-text').textContent = 'Editar Medicamento';
-            document.getElementById('save-btn-text').textContent = 'Atualizar no Servidor';
-        };
-
-        window.resetAdminForm = function() {
+        function resetAdminForm() {
             document.getElementById('prod-id').value = '';
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-price').value = '';
             document.getElementById('prod-dosage').value = '';
             document.getElementById('prod-image').value = '';
             document.getElementById('prod-desc').value = '';
-            document.getElementById('prod-prescription').checked = false;
-            document.getElementById('prod-out-of-stock').checked = false;
+        }
 
-            document.getElementById('form-title-text').textContent = 'Cadastrar Novo Medicamento Oficial';
-            document.getElementById('save-btn-text').textContent = 'Publicar Medicamento no Servidor';
-        };
+        function renderAdminProductsTable() {
+            const list = document.getElementById('admin-products-list');
+            list.innerHTML = products.map(p => `
+                <tr>
+                    <td class="p-2 font-bold">${p.name}</td>
+                    <td class="p-2">${Number(p.price).toLocaleString()} Kz</td>
+                    <td class="p-2 text-center space-x-1">
+                        <button onclick="editProduct('${p.id}')" class="p-1 bg-slate-100 rounded"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteProduct('${p.id}')" class="p-1 bg-red-50 text-red-600 rounded"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
-        window.confirmDeleteProduct = function(id) {
-            deleteTargetId = id;
-            document.getElementById('delete-confirm-modal').classList.remove('hidden');
-            document.getElementById('confirm-delete-btn').onclick = async () => {
-                try {
-                    if (db && auth && auth.currentUser) {
-                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'medicaments', String(deleteTargetId));
-                        await deleteDoc(docRef);
-                        showToast('Medicamento removido do servidor!');
-                    } else {
-                        products = products.filter(p => p.id !== deleteTargetId);
-                        window.renderProducts();
-                        renderAdminProductsTable();
-                        showToast('Removido localmente.');
-                    }
-                } catch (err) {
-                    console.error("Erro ao apagar:", err);
-                    alert("Erro ao apagar do servidor.");
-                }
-                window.closeDeleteConfirmModal();
-            };
-        };
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if(btn.dataset.cat === cat) btn.className = "category-btn active bg-pharmacy-600 text-white px-4 py-2 rounded-xl whitespace-nowrap shadow-sm";
+                else btn.className = "category-btn bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-xl whitespace-nowrap";
+            });
+            renderProducts();
+        }
 
-        window.closeDeleteConfirmModal = function() {
-            document.getElementById('delete-confirm-modal').classList.add('hidden');
-            deleteTargetId = null;
-        };
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value;
+            renderProducts();
+        }
 
-        // Sincronização de Avisos Globais
-        window.saveNotice = async function() {
-            const text = document.getElementById('notice-input').value.trim();
-            try {
-                if (db && auth && auth.currentUser) {
-                    const noticeRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'notice');
-                    await setDoc(noticeRef, { text });
-                    showToast('Aviso global publicado para todos!');
-                } else {
-                    localStorage.setItem('franciel_notice', text);
-                    displayNotice(text);
-                    showToast('Aviso salvo localmente.');
-                }
-            } catch(e) {
-                console.error("Erro aviso:", e);
-            }
-        };
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            searchQuery = '';
+            renderProducts();
+        }
 
-        function displayNotice(text) {
-            const banner = document.getElementById('admin-notice-banner');
-            const textEl = document.getElementById('admin-notice-text');
-            if(text) {
-                textEl.textContent = text;
-                banner.classList.remove('hidden');
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            const existing = cart.find(item => item.id === id);
+            if (existing) existing.qty += 1;
+            else cart.push({ ...product, qty: 1 });
+            localStorage.setItem('franciel_cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast('Adicionado ao carrinho!');
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.textContent = totalItems;
+            if (totalItems > 0) badge.classList.remove('scale-0');
+            else badge.classList.add('scale-0');
+            
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            totalEl.textContent = totalPrice.toLocaleString() + ' Kz';
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl">
+                    <div>
+                        <h5 class="font-bold text-xs">${item.name}</h5>
+                        <p class="text-[11px] text-pharmacy-700">${item.price} Kz (x${item.qty})</p>
+                    </div>
+                    <button onclick="removeFromCart('${item.id}')" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            localStorage.setItem('franciel_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function toggleCartModal(show) {
+            const modal = document.getElementById('cart-modal');
+            if(show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function checkoutWhatsApp() {
+            const name = document.getElementById('customer-name').value.trim();
+            const address = document.getElementById('customer-address').value.trim();
+            if(!name || !address) { alert('Preencha o nome e morada.'); return; }
+            
+            let text = `*PEDIDO - FARMÁCIAFRANCIEL*\nCliente: ${name}\nMorada: ${address}\n\n`;
+            cart.forEach(i => { text += `• ${i.qty}x ${i.name} (${i.price * i.qty} Kz)\n`; });
+            window.open(`https://wa.me/244947705474?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function openAdminAuth() {
+            if(adminLoggedIn) document.getElementById('admin-panel-modal').classList.remove('hidden');
+            else document.getElementById('admin-auth-modal').classList.remove('hidden');
+        }
+        function closeAdminAuth() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            if(document.getElementById('admin-password').value === ADMIN_PASSWORD) {
+                adminLoggedIn = true;
+                closeAdminAuth();
+                document.getElementById('admin-panel-modal').classList.remove('hidden');
+                renderAdminProductsTable();
+                showToast('Painel aberto com sucesso!');
             } else {
-                banner.classList.add('hidden');
+                alert('Palavra-passe errada!');
             }
         }
-
-        window.closeNoticeBanner = function() {
-            document.getElementById('admin-notice-banner').classList.add('hidden');
-        };
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').textContent = msg;
-            toast.classList.remove('translate-x-full');
-            setTimeout(() => {
-                toast.classList.add('translate-x-full');
-            }, 3000);
+        function closeAdminPanel() { document.getElementById('admin-panel-modal').classList.add('hidden'); }
+        function copyIBAN() {
+            navigator.clipboard.writeText(document.getElementById('iban-text').textContent);
+            showToast('IBAN copiado!');
         }
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.remove('translate-x-full');
+            setTimeout(() => t.classList.add('translate-x-full'), 3000);
+        }
+        function closeNoticeBanner() { document.getElementById('admin-notice-banner').classList.add('hidden'); }
     </script>
 </body>
 </html>
