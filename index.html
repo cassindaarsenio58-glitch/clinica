@@ -17,12 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK (v9 Modular com as suas chaves integradas) -->
+    <!-- Firebase SDK (v9 Modular com as suas chaves reais) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-        // CONFIGURAÇÃO DO FIREBASE COM AS SUAS CHAVES REAIS
         const firebaseConfig = {
             apiKey: "AIzaSyAgC-qo9flWlWZUcHgBGHQpPp7zMCIz7b8",
             authDomain: "famarciafranciel.firebaseapp.com",
@@ -266,21 +265,14 @@
 
     <!-- Script de Programação -->
     <script>
-        // HASH SEGURO DA PALAVRA-PASSE ("20282franciel")
-        const ADMIN_PASSWORD_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
+        // PALAVRA-PASSE SEGURA DE ADMINISTRADOR
+        const ADMIN_PASSWORD = "20282franciel"; 
         
         let products = [];
         let cart = JSON.parse(localStorage.getItem('franciel_cart')) || [];
         let currentCategory = 'all';
         let searchQuery = '';
         let adminLoggedIn = false;
-
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
 
         window.addEventListener('firebase-ready', () => {
             const { collection, onSnapshot } = window.firebaseCollections;
@@ -508,12 +500,11 @@
         }
         function closeAdminAuth() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
         
-        async function handleAdminLogin(e) {
+        function handleAdminLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-password').value;
-            const hashedInput = await sha256(pass);
             
-            if(hashedInput === ADMIN_PASSWORD_HASH) {
+            if(pass === ADMIN_PASSWORD) {
                 adminLoggedIn = true;
                 closeAdminAuth();
                 document.getElementById('admin-password').value = '';
