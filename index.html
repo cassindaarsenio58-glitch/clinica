@@ -17,26 +17,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK (v9 Modular) -->
+    <!-- Firebase SDK (v9 Modular com as suas chaves integradas) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-        // COLOQUE AQUI AS SUAS CREDENCIAIS DO FIREBASE (Crie um projeto grátis em firebase.google.com)
+        // CONFIGURAÇÃO DO FIREBASE COM AS SUAS CHAVES REAIS
         const firebaseConfig = {
-            apiKey: "SUA_API_KEY_AQUI",
-            authDomain: "seu-projeto.firebaseapp.com",
-            projectId: "seu-projeto",
-            storageBucket: "seu-projeto.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123:web:abc"
+            apiKey: "AIzaSyAgC-qo9flWlWZUcHgBGHQpPp7zMCIz7b8",
+            authDomain: "famarciafranciel.firebaseapp.com",
+            projectId: "famarciafranciel",
+            storageBucket: "famarciafranciel.firebasestorage.app",
+            messagingSenderId: "739798079033",
+            appId: "1:739798079033:web:2f766e9c00935e0bb71fe8",
+            measurementId: "G-EVCQQ29R8X"
         };
 
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Disponibilizar globalmente para o script da página
         window.db = db;
         window.firebaseCollections = { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc, setDoc };
         window.dispatchEvent(new Event('firebase-ready'));
@@ -62,7 +61,6 @@
         @media (min-width: 768px) { body { padding-bottom: 0px; } }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .app-shadow { box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06); }
         .card-shadow { box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05); }
     </style>
 </head>
@@ -81,7 +79,7 @@
                         </h1>
                         <p class="text-[11px] font-medium text-slate-500 flex items-center gap-1 mt-0.5">
                             <span id="sync-status" class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
-                            Sincronização Nuvem Ativa
+                            Loja Online Sincronizada
                         </p>
                     </div>
                 </div>
@@ -91,18 +89,12 @@
                         <i class="fa-solid fa-basket-shopping text-xl"></i>
                         <span id="cart-badge" class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
                     </button>
-                    <button onclick="openAdminAuth()" class="flex items-center gap-1 px-3 py-2 rounded-xl bg-pharmacy-50 text-pharmacy-700 hover:bg-pharmacy-100 font-bold text-xs transition">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <span class="hidden sm:inline">Área do Dono</span>
+                    <!-- Ícone de administrador seguro -->
+                    <button onclick="openAdminAuth()" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center transition" title="Painel do Administrador">
+                        <i class="fa-solid fa-lock text-sm"></i>
                     </button>
                 </div>
             </div>
-        </div>
-
-        <div id="admin-notice-banner" class="hidden bg-emerald-600 text-white text-xs font-medium py-1.5 px-4 text-center relative flex items-center justify-center gap-2">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span id="admin-notice-text">Bem-vindo à FarmáciaFranciel!</span>
-            <button onclick="closeNoticeBanner()" class="absolute right-2 text-white/80 hover:text-white px-2"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </header>
 
@@ -124,11 +116,11 @@
             </div>
         </div>
 
-        <!-- Banner Informativo / IBAN -->
+        <!-- Banner IBAN -->
         <div class="mb-6 rounded-2xl bg-gradient-to-r from-pharmacy-800 to-emerald-800 text-white p-5 shadow-xl relative overflow-hidden">
             <div class="relative z-10 max-w-xl">
                 <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded uppercase">WhatsApp: 947 705 474</span>
-                <h2 class="text-xl font-extrabold mt-1">Medicamentos em Tempo Real</h2>
+                <h2 class="text-xl font-extrabold mt-1">Medicamentos em Direto</h2>
                 <p class="text-white/90 text-xs mt-1">IBAN para transferência: <strong class="text-emerald-300 font-mono" id="iban-text">000600007086045530142</strong></p>
                 <button onclick="copyIBAN()" class="mt-2 bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded text-xs font-bold"><i class="fa-regular fa-copy"></i> Copiar IBAN</button>
             </div>
@@ -137,13 +129,13 @@
         <!-- Lista de Produtos -->
         <div class="mb-8">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-bold text-lg text-slate-900">Catálogo em Direto</h3>
-                <span id="product-count" class="text-xs text-slate-500 font-medium">A sincronizar...</span>
+                <h3 class="font-bold text-lg text-slate-900">Catálogo Disponível</h3>
+                <span id="product-count" class="text-xs text-slate-500 font-medium">A carregar...</span>
             </div>
             <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"></div>
             <div id="no-products" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
-                <h4 class="font-bold text-slate-700">Nenhum medicamento disponível</h4>
+                <h4 class="font-bold text-slate-700">Nenhum medicamento disponível no momento</h4>
             </div>
         </div>
     </main>
@@ -175,60 +167,89 @@
         </div>
     </div>
 
-    <!-- Painel Administrador (Dono) -->
+    <!-- Modal Palavra-Passe Administrador -->
     <div id="admin-auth-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 class="font-bold text-lg text-center">Área do Dono</h3>
+            <div class="text-center">
+                <div class="w-12 h-12 rounded-full bg-pharmacy-50 text-pharmacy-600 flex items-center justify-center mx-auto mb-2 text-lg">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900">Acesso Restrito</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Insira a palavra-passe de administrador</p>
+            </div>
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-                <input type="password" id="admin-password" placeholder="Palavra-passe (20282franciel)" required class="w-full text-xs p-3 bg-slate-50 border rounded-xl outline-none">
+                <input type="password" id="admin-password" placeholder="Palavra-passe" required class="w-full text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-pharmacy-500">
                 <div class="flex gap-2">
-                    <button type="button" onclick="closeAdminAuth()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-bold">Cancelar</button>
+                    <button type="button" onclick="closeAdminAuth()" class="flex-1 bg-slate-100 py-2.5 rounded-xl text-xs font-bold text-slate-600">Cancelar</button>
                     <button type="submit" class="flex-1 bg-pharmacy-600 text-white py-2.5 rounded-xl text-xs font-bold">Entrar</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Painel de Gestão do Administrador -->
     <div id="admin-panel-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6">
         <div class="bg-white rounded-2xl max-w-4xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
-                <h3 class="font-bold">Painel de Controlo em Tempo Real (Admin)</h3>
+                <h3 class="font-bold text-sm"><i class="fa-solid fa-sliders text-emerald-400"></i> Painel de Controlo do Administrador</h3>
                 <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-4 sm:p-6 bg-slate-50 space-y-6">
-                <!-- Formulário Adicionar/Editar -->
+                <!-- Formulário Adicionar/Atualizar -->
                 <div class="bg-white p-5 rounded-xl border shadow-sm">
-                    <h4 class="font-bold text-sm text-slate-800 mb-3"><i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Adicionar / Atualizar Remédio</h4>
+                    <h4 class="font-bold text-sm text-slate-800 mb-3"><i class="fa-solid fa-plus-circle text-pharmacy-600"></i> Adicionar ou Atualizar Remédio</h4>
                     <form onsubmit="handleSaveProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                         <input type="hidden" id="prod-id">
-                        <input type="text" id="prod-name" placeholder="Nome do Medicamento *" required class="p-2.5 bg-slate-50 border rounded-xl outline-none">
-                        <input type="number" id="prod-price" placeholder="Preço em Kz *" required class="p-2.5 bg-slate-50 border rounded-xl outline-none">
-                        <select id="prod-category" class="p-2.5 bg-slate-50 border rounded-xl outline-none">
-                            <option value="remedios">💊 Remédios</option>
-                            <option value="suplementos">🏋️ Suplementos</option>
-                            <option value="higiene">🧼 Higiene</option>
-                            <option value="bebe">🍼 Bebê</option>
-                        </select>
-                        <input type="text" id="prod-dosage" placeholder="Apresentação (Ex: Caixa c/ 20)" class="p-2.5 bg-slate-50 border rounded-xl outline-none">
-                        <input type="text" id="prod-image" placeholder="URL da Imagem *" required class="sm:col-span-2 p-2.5 bg-slate-50 border rounded-xl outline-none">
-                        <textarea id="prod-desc" placeholder="Descrição do remédio..." rows="2" class="sm:col-span-2 p-2.5 bg-slate-50 border rounded-xl outline-none"></textarea>
-                        <div class="sm:col-span-2 flex gap-2">
-                            <button type="submit" class="flex-1 bg-pharmacy-600 text-white font-bold py-2.5 rounded-xl">Salvar na Nuvem (Sincronizar)</button>
-                            <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 rounded-xl font-bold">Limpar</button>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Nome do Medicamento *</label>
+                            <input type="text" id="prod-name" placeholder="Ex: Paracetamol 500mg" required class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Preço (Kz) *</label>
+                            <input type="number" id="prod-price" placeholder="Ex: 2500" required class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Categoria</label>
+                            <select id="prod-category" class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                                <option value="remedios">💊 Remédios</option>
+                                <option value="suplementos">🏋️ Suplementos</option>
+                                <option value="higiene">🧼 Higiene</option>
+                                <option value="bebe">🍼 Bebê</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Estado de Stock</label>
+                            <select id="prod-status" class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                                <option value="disponivel">✅ Disponível (Em Stock)</option>
+                                <option value="esgotado">❌ Esgotado</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">URL da Imagem (Cole o endereço da imagem do remédio) *</label>
+                            <input type="text" id="prod-image" placeholder="https://exemplo.com/imagem-remedio.jpg" required class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Apresentação / Descrição</label>
+                            <input type="text" id="prod-dosage" placeholder="Ex: Caixa com 20 comprimidos" class="w-full p-2.5 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                        <div class="sm:col-span-2 flex gap-2 pt-2">
+                            <button type="submit" class="flex-1 bg-pharmacy-600 hover:bg-pharmacy-700 text-white font-bold py-3 rounded-xl transition">Guardar Medicamento na Loja</button>
+                            <button type="button" onclick="resetAdminForm()" class="px-4 bg-slate-200 text-slate-700 rounded-xl font-bold">Limpar</button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Tabela Gestão -->
+                <!-- Tabela de Gestão de Produtos -->
                 <div class="bg-white p-5 rounded-xl border shadow-sm">
-                    <h4 class="font-bold text-sm text-slate-800 mb-3">Produtos na Base de Dados</h4>
+                    <h4 class="font-bold text-sm text-slate-800 mb-3">Produtos Registados na Loja</h4>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs text-left">
                             <thead class="bg-slate-100 uppercase">
                                 <tr>
-                                    <th class="p-2">Nome</th>
-                                    <th class="p-2">Preço</th>
-                                    <th class="p-2 text-center">Ações</th>
+                                    <th class="p-2.5">Medicamento</th>
+                                    <th class="p-2.5">Preço</th>
+                                    <th class="p-2.5">Estado</th>
+                                    <th class="p-2.5 text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="admin-products-list" class="divide-y"></tbody>
@@ -243,20 +264,28 @@
         <span id="toast-msg">Sucesso!</span>
     </div>
 
-    <!-- Script Principal Ligado ao Firebase -->
+    <!-- Script de Programação -->
     <script>
-        const ADMIN_PASSWORD = "20282franciel";
+        // HASH SEGURO DA PALAVRA-PASSE ("20282franciel")
+        const ADMIN_PASSWORD_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; 
+        
         let products = [];
         let cart = JSON.parse(localStorage.getItem('franciel_cart')) || [];
         let currentCategory = 'all';
         let searchQuery = '';
         let adminLoggedIn = false;
 
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         window.addEventListener('firebase-ready', () => {
-            const { collection, onSnapshot, addDoc, updateDoc, deleteDoc, doc } = window.firebaseCollections;
+            const { collection, onSnapshot } = window.firebaseCollections;
             const db = window.db;
 
-            // Ouvir alterações em TEMPO REAL no Firestore (Sincroniza Chrome, Safari e App do Dono instantaneamente)
             onSnapshot(collection(db, "produtos"), (snapshot) => {
                 products = [];
                 snapshot.forEach((docSnap) => {
@@ -268,18 +297,8 @@
                     renderAdminProductsTable();
                 }
             }, (error) => {
-                console.error("Erro ao sincronizar:", error);
+                console.error("Erro de sincronização:", error);
                 document.getElementById('sync-status').className = "w-2 h-2 rounded-full bg-red-500 inline-block";
-            });
-
-            // Aviso em tempo real
-            onSnapshot(collection(db, "config"), (snapshot) => {
-                snapshot.forEach((docSnap) => {
-                    if(docSnap.id === 'aviso' && docSnap.data().texto) {
-                        document.getElementById('admin-notice-text').textContent = docSnap.data().texto;
-                        document.getElementById('admin-notice-banner').classList.remove('hidden');
-                    }
-                });
             });
         });
 
@@ -302,24 +321,28 @@
             }
 
             noProducts.classList.add('hidden');
-            grid.innerHTML = filtered.map(p => `
-                <div class="bg-white rounded-2xl border border-slate-100 card-shadow overflow-hidden flex flex-col justify-between">
-                    <img src="${p.image}" class="w-full h-36 sm:h-44 object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500'">
-                    <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-                        <div>
-                            <span class="text-[10px] font-bold uppercase text-pharmacy-600 bg-pharmacy-50 px-2 py-0.5 rounded">${p.category}</span>
-                            <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1 line-clamp-1">${p.name}</h4>
-                            <p class="text-[11px] text-slate-400">${p.dosage || ''}</p>
-                        </div>
-                        <div class="mt-3 pt-2 border-t flex items-center justify-between">
-                            <span class="font-extrabold text-slate-900 text-xs sm:text-sm">${Number(p.price).toLocaleString()} Kz</span>
-                            <button onclick="addToCart('${p.id}')" class="w-8 h-8 rounded-xl bg-pharmacy-600 hover:bg-pharmacy-700 text-white flex items-center justify-center shadow">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                            </button>
+            grid.innerHTML = filtered.map(p => {
+                const isEsgotado = p.status === 'esgotado';
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-100 card-shadow overflow-hidden flex flex-col justify-between relative">
+                        ${isEsgotado ? '<div class="absolute inset-0 bg-slate-900/40 backdrop-blur-[1px] z-10 flex items-center justify-center"><span class="bg-red-600 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-full shadow-lg">Esgotado</span></div>' : ''}
+                        <img src="${p.image}" class="w-full h-36 sm:h-44 object-cover bg-slate-100" onerror="this.src='https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500'">
+                        <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase text-pharmacy-600 bg-pharmacy-50 px-2 py-0.5 rounded">${p.category}</span>
+                                <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1 line-clamp-1">${p.name}</h4>
+                                <p class="text-[11px] text-slate-400">${p.dosage || ''}</p>
+                            </div>
+                            <div class="mt-3 pt-2 border-t flex items-center justify-between">
+                                <span class="font-extrabold text-slate-900 text-xs sm:text-sm">${Number(p.price).toLocaleString()} Kz</span>
+                                <button ${isEsgotado ? 'disabled' : `onclick="addToCart('${p.id}')"`} class="w-8 h-8 rounded-xl ${isEsgotado ? 'bg-slate-300 cursor-not-allowed' : 'bg-pharmacy-600 hover:bg-pharmacy-700 shadow'} text-white flex items-center justify-center">
+                                    <i class="fa-solid fa-plus text-xs"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         async function handleSaveProduct(e) {
@@ -332,30 +355,30 @@
                 name: document.getElementById('prod-name').value,
                 price: Number(document.getElementById('prod-price').value),
                 category: document.getElementById('prod-category').value,
+                status: document.getElementById('prod-status').value,
                 dosage: document.getElementById('prod-dosage').value,
-                image: document.getElementById('prod-image').value,
-                desc: document.getElementById('prod-desc').value
+                image: document.getElementById('prod-image').value
             };
 
             try {
                 if(id) {
                     await updateDoc(doc(db, "produtos", id), data);
-                    showToast('Produto atualizado na nuvem!');
+                    showToast('Produto atualizado para todos os clientes!');
                 } else {
                     await addDoc(collection(db, "produtos"), data);
-                    showToast('Novo produto adicionado na nuvem!');
+                    showToast('Novo medicamento publicado na loja!');
                 }
                 resetAdminForm();
             } catch (err) {
-                alert('Erro ao guardar: ' + err.message);
+                alert('Erro ao guardar na nuvem: ' + err.message);
             }
         }
 
         async function deleteProduct(id) {
-            if(confirm('Tem certeza que deseja apagar este medicamento para todos?')) {
+            if(confirm('Tem certeza que deseja apagar permanentemente este medicamento da loja?')) {
                 const { deleteDoc, doc } = window.firebaseCollections;
                 await deleteDoc(doc(window.db, "produtos", id));
-                showToast('Remédio apagado com sucesso!');
+                showToast('Remédio apagado da loja!');
             }
         }
 
@@ -366,29 +389,34 @@
             document.getElementById('prod-name').value = p.name;
             document.getElementById('prod-price').value = p.price;
             document.getElementById('prod-category').value = p.category;
+            document.getElementById('prod-status').value = p.status || 'disponivel';
             document.getElementById('prod-dosage').value = p.dosage || '';
             document.getElementById('prod-image').value = p.image;
-            document.getElementById('prod-desc').value = p.desc || '';
         }
 
         function resetAdminForm() {
             document.getElementById('prod-id').value = '';
             document.getElementById('prod-name').value = '';
             document.getElementById('prod-price').value = '';
+            document.getElementById('prod-status').value = 'disponivel';
             document.getElementById('prod-dosage').value = '';
             document.getElementById('prod-image').value = '';
-            document.getElementById('prod-desc').value = '';
         }
 
         function renderAdminProductsTable() {
             const list = document.getElementById('admin-products-list');
             list.innerHTML = products.map(p => `
                 <tr>
-                    <td class="p-2 font-bold">${p.name}</td>
-                    <td class="p-2">${Number(p.price).toLocaleString()} Kz</td>
-                    <td class="p-2 text-center space-x-1">
-                        <button onclick="editProduct('${p.id}')" class="p-1 bg-slate-100 rounded"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteProduct('${p.id}')" class="p-1 bg-red-50 text-red-600 rounded"><i class="fa-solid fa-trash"></i></button>
+                    <td class="p-2.5 font-bold">${p.name}</td>
+                    <td class="p-2.5">${Number(p.price).toLocaleString()} Kz</td>
+                    <td class="p-2.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.status === 'esgotado' ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">
+                            ${p.status === 'esgotado' ? 'Esgotado' : 'Disponível'}
+                        </span>
+                    </td>
+                    <td class="p-2.5 text-center space-x-1">
+                        <button onclick="editProduct('${p.id}')" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded text-slate-700"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteProduct('${p.id}')" class="p-1.5 bg-red-50 hover:bg-red-100 rounded text-red-600"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -416,7 +444,7 @@
 
         function addToCart(id) {
             const product = products.find(p => p.id === id);
-            if (!product) return;
+            if (!product || product.status === 'esgotado') return;
             const existing = cart.find(item => item.id === id);
             if (existing) existing.qty += 1;
             else cart.push({ ...product, qty: 1 });
@@ -463,7 +491,7 @@
         function checkoutWhatsApp() {
             const name = document.getElementById('customer-name').value.trim();
             const address = document.getElementById('customer-address').value.trim();
-            if(!name || !address) { alert('Preencha o nome e morada.'); return; }
+            if(!name || !address) { alert('Preencha o seu nome e morada.'); return; }
             
             let text = `*PEDIDO - FARMÁCIAFRANCIEL*\nCliente: ${name}\nMorada: ${address}\n\n`;
             cart.forEach(i => { text += `• ${i.qty}x ${i.name} (${i.price * i.qty} Kz)\n`; });
@@ -471,20 +499,29 @@
         }
 
         function openAdminAuth() {
-            if(adminLoggedIn) document.getElementById('admin-panel-modal').classList.remove('hidden');
-            else document.getElementById('admin-auth-modal').classList.remove('hidden');
-        }
-        function closeAdminAuth() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            if(document.getElementById('admin-password').value === ADMIN_PASSWORD) {
-                adminLoggedIn = true;
-                closeAdminAuth();
+            if(adminLoggedIn) {
                 document.getElementById('admin-panel-modal').classList.remove('hidden');
                 renderAdminProductsTable();
-                showToast('Painel aberto com sucesso!');
             } else {
-                alert('Palavra-passe errada!');
+                document.getElementById('admin-auth-modal').classList.remove('hidden');
+            }
+        }
+        function closeAdminAuth() { document.getElementById('admin-auth-modal').classList.add('hidden'); }
+        
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin-password').value;
+            const hashedInput = await sha256(pass);
+            
+            if(hashedInput === ADMIN_PASSWORD_HASH) {
+                adminLoggedIn = true;
+                closeAdminAuth();
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-panel-modal').classList.remove('hidden');
+                renderAdminProductsTable();
+                showToast('Painel de Administrador aberto com sucesso!');
+            } else {
+                alert('Palavra-passe incorreta!');
             }
         }
         function closeAdminPanel() { document.getElementById('admin-panel-modal').classList.add('hidden'); }
@@ -498,7 +535,6 @@
             t.classList.remove('translate-x-full');
             setTimeout(() => t.classList.add('translate-x-full'), 3000);
         }
-        function closeNoticeBanner() { document.getElementById('admin-notice-banner').classList.add('hidden'); }
     </script>
 </body>
 </html>
